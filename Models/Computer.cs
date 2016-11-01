@@ -13,6 +13,18 @@ namespace Bangazon.Models
     [DataType(DataType.Date)]
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime DateCreated { get; set; }
-  }
 
+    [Required]
+    public string Make { get; set; }
+
+    [Required]
+    public string Model { get; set; }
+
+    [Required]
+    [Display (Name = "Serial Number")]
+    public string SerialNumber { get; set; }
+
+    // Foreign Key Dependencies
+    public ICollection<Employee> Employees;
+  }
 }

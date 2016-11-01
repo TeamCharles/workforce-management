@@ -14,6 +14,13 @@ namespace Bangazon.Models
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime DateCreated { get; set; }
     
+    [Required]
+    public int EmployeeId { get; set; }
+    public Employee Employee { get; set; }
+
+    [Required]
+    public int ProgramId { get; set; }
+    public Program Program { get; set; }
 
   }
 }
