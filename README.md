@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-To ensure that the Workforce Management Bangazon App works as intended make sure that you have the following dependencies and technologies on your local machine
+To ensure that the Bangazon Workforce Management App works as intended make sure that you have the following dependencies and technologies on your local machine
 
 - dotnet 
 
