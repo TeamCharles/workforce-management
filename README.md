@@ -1,39 +1,59 @@
-# Welcome to ASP.NET Core
+# Bangazon Web Initial Site
 
-We've made some big updates in this release, so it’s **important** that you spend a few minutes to learn what’s new.
+## Dependencies
 
-You've created a new ASP.NET Core project. [Learn what's new](https://go.microsoft.com/fwlink/?LinkId=518016)
+To ensure that the Workforce Management Bangazon App works as intended make sure that you have the following dependencies and technologies on your local machine
 
-## This application consists of:
+- dotnet 
 
-*   Sample pages using ASP.NET Core MVC
-*   [Bower](https://go.microsoft.com/fwlink/?LinkId=518004) for managing client-side libraries
-*   Theming using [Bootstrap](https://go.microsoft.com/fwlink/?LinkID=398939)
+If you need to download dotnet onto your local machine, visit [Microsoft's Documentation](https://www.microsoft.com/en-us/download/details.aspx?id=30653)
 
-## How to
+- bower
 
-*   [Add a Controller and View](https://go.microsoft.com/fwlink/?LinkID=398600)
-*   [Add an appsetting in config and access it in app.](https://go.microsoft.com/fwlink/?LinkID=699562)
-*   [Manage User Secrets using Secret Manager.](https://go.microsoft.com/fwlink/?LinkId=699315)
-*   [Use logging to log a message.](https://go.microsoft.com/fwlink/?LinkId=699316)
-*   [Add packages using NuGet.](https://go.microsoft.com/fwlink/?LinkId=699317)
-*   [Add client packages using Bower.](https://go.microsoft.com/fwlink/?LinkId=699318)
-*   [Target development, staging or production environment.](https://go.microsoft.com/fwlink/?LinkId=699319)
+If you need to download bower onto your local machine, visit [Bower's Documentation](https://bower.io/)
 
-## Overview
+## Installation OSX/UNIX
 
-*   [Conceptual overview of what is ASP.NET Core](https://go.microsoft.com/fwlink/?LinkId=518008)
-*   [Fundamentals of ASP.NET Core such as Startup and middleware.](https://go.microsoft.com/fwlink/?LinkId=699320)
-*   [Working with Data](https://go.microsoft.com/fwlink/?LinkId=398602)
-*   [Security](https://go.microsoft.com/fwlink/?LinkId=398603)
-*   [Client side development](https://go.microsoft.com/fwlink/?LinkID=699321)
-*   [Develop on different platforms](https://go.microsoft.com/fwlink/?LinkID=699322)
-*   [Read more on the documentation site](https://go.microsoft.com/fwlink/?LinkID=699323)
+Clone or fork the project. Navigate to where the project is saved on your machine. For all of the following commands enter them into your bash terminal to ensure that the application is installed correctly
 
-## Run & Deploy
 
-*   [Run your app](https://go.microsoft.com/fwlink/?LinkID=517851)
-*   [Run tools such as EF migrations and more](https://go.microsoft.com/fwlink/?LinkID=517853)
-*   [Publish to Microsoft Azure Web Apps](https://go.microsoft.com/fwlink/?LinkID=398609)
+This command sets the environment for your local copy of the application to development mode.
+```Bash
+export ASPNETCORE_ENVIRONMENT="Development"
+```
 
-We would love to hear your [feedback](https://go.microsoft.com/fwlink/?LinkId=518015)
+On initial installation of the Banagazon Workforce Management web application you must set an environment variable to your local database. (This database with the file name bangazon.db will be created when you run dotnet ef database update later in the installation process.)
+```Bash
+export BangazonWeb_Db_Path="/path/to/bangazon.db"
+```
+
+Once your local variables have been set run the following commands to start. `dotnet ef database update` will create the database for your application at the location that was set earlier.
+```Bash
+dotnet restore
+dotnet ef database update
+bower install
+dotnet run
+```
+
+## Installation Windows
+
+Clone or fork the project. Navigate to where the project is saved on your machine. For all of the following commands enter them into your bash terminal to ensure that the application is installed correctly
+
+
+This command sets the environment for your local copy of the application to development mode.
+```Bash
+$env:ASPNETCORE_ENVIRONMENT="Development"
+```
+
+On initial installation of the Banagazon Workforce Management web application you must set an environment variable to your local database. Even though you have not yet created a database, this variable will set the location of your database for later after creation.
+```Bash
+$env:BangazonWeb_Db_Path="/path/to/bangazon.db"
+```
+
+Once your local variables have been set run the following commands to start. `dotnet ef database update` will create the database for your application at the location that was set earlier.
+```Bash
+dotnet restore
+dotnet ef database update
+bower install
+dotnet run
+```
