@@ -7,6 +7,11 @@ namespace Bangazon.Models
 {
   public class Computer
   {
+    /**
+     * Class: Computer
+     * Purpose: Represents the Computer table in the database
+     * Author: Matt Kraatz
+     */
     [Key]
     public int ComputerId { get; set; }
     [Required]

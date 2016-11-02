@@ -5,6 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bangazon.Models
 {
+  /**
+   * Class: Attendee
+   * Purpose: Represents the Attendee table in the database
+   * Author: Matt Kraatz
+   */
   public class Attendee
   {
     [Key]
