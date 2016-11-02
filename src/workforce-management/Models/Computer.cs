@@ -31,5 +31,8 @@ namespace Bangazon.Models
 
         // Foreign Key Dependencies
         public ICollection<Employee> Employees;
+
+        public int? EmployeeId { get; set; }
+        public Employee Employee { get; set; }
     }
 }
