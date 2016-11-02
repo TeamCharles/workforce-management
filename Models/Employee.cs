@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Bangazon.Models
 {
   /**
-    * Class: Employee
-    * Purpose: Represents the Employee table in the database
-    * Author: Matt Kraatz
-    */
+   * Class: Employee
+   * Purpose: Represents the Employee table in the database
+   * Author: Matt Kraatz
+   */
   public class Employee
   {
     [Key]
