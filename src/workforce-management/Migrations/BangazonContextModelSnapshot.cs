@@ -95,7 +95,7 @@ namespace workforcemanagement.Migrations
 
                     b.Property<int>("DepartmentId");
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<DateTime?>("EndDate");
 
                     b.Property<string>("FirstName")
                         .IsRequired();
@@ -114,9 +114,9 @@ namespace workforcemanagement.Migrations
                     b.ToTable("Employee");
                 });
 
-            modelBuilder.Entity("Bangazon.Models.Program", b =>
+            modelBuilder.Entity("Bangazon.Models.TrainingProgram", b =>
                 {
-                    b.Property<int>("DepartmentId")
+                    b.Property<int>("TrainingProgramId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated")
@@ -131,9 +131,9 @@ namespace workforcemanagement.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 50);
 
-                    b.HasKey("DepartmentId");
+                    b.HasKey("TrainingProgramId");
 
-                    b.ToTable("Program");
+                    b.ToTable("TrainingProgram");
                 });
 
             modelBuilder.Entity("Bangazon.Models.Attendee", b =>
@@ -143,7 +143,7 @@ namespace workforcemanagement.Migrations
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Bangazon.Models.Program", "Program")
+                    b.HasOne("Bangazon.Models.TrainingProgram", "Program")
                         .WithMany()
                         .HasForeignKey("ProgramId")
                         .OnDelete(DeleteBehavior.Cascade);
