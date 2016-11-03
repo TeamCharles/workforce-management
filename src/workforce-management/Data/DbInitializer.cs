@@ -120,60 +120,70 @@ namespace BangazonWeb.Data
                       FirstName = "Carson",
                       LastName = "Daily",
                       DepartmentId = 1,
+                      ComputerId = 1,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
                   },
                   new Employee {
                       FirstName = "Steve",
                       LastName = "Brownlee",
                       DepartmentId = 1,
+                      ComputerId = 2,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
                   },
                   new Employee {
                       FirstName = "Grace",
                       LastName = "Nichols",
                       DepartmentId = 1,
+                      ComputerId = 3,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
                   },
                   new Employee {
                       FirstName = "Tony",
                       LastName = "Nichols",
                       DepartmentId = 1,
+                      ComputerId = 4,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
                   },
                   new Employee {
                       FirstName = "Steve",
                       LastName = "Erwin",
                       DepartmentId = 2,
+                      ComputerId = 5,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
                   },
                   new Employee {
                       FirstName = "Dejan",
                       LastName = "Stjephanovic",
                       DepartmentId = 2,
+                      ComputerId = 6,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
                   },
                   new Employee {
                       FirstName = "Cody",
                       LastName = "Szkalarski",
                       DepartmentId = 2,
+                      ComputerId = 7,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
                   },
                   new Employee {
                       FirstName = "Brandon",
                       LastName = "Yorks",
                       DepartmentId = 3,
+                      ComputerId = 8,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
                   },
                   new Employee {
                       FirstName = "Mike",
                       LastName = "Morris",
                       DepartmentId = 3,
+                      ComputerId = 9,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
                   },
                   new Employee {
                       FirstName = "Stephanie",
                       LastName = "Best",
                       DepartmentId = 3,
+                      ComputerId = 10,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
                   }
                 };
@@ -184,9 +194,6 @@ namespace BangazonWeb.Data
                 }
 
                 context.SaveChanges();
-
- 
-       
 
                 var trainingProgram = new TrainingProgram[]
                     {

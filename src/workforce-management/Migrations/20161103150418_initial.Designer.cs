@@ -8,8 +8,8 @@ using BangazonWeb.Data;
 namespace workforcemanagement.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    [Migration("20161103132558_Initial")]
-    partial class Initial
+    [Migration("20161103150418_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,8 +46,6 @@ namespace workforcemanagement.Migrations
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasDefaultValueSql("strftime('%Y-%m-%d %H:%M:%S')");
-
-                    b.Property<int?>("EmployeeId");
 
                     b.Property<string>("Make")
                         .IsRequired();
@@ -110,8 +108,7 @@ namespace workforcemanagement.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.HasIndex("ComputerId")
-                        .IsUnique();
+                    b.HasIndex("ComputerId");
 
                     b.HasIndex("DepartmentId");
 
@@ -120,7 +117,7 @@ namespace workforcemanagement.Migrations
 
             modelBuilder.Entity("Bangazon.Models.TrainingProgram", b =>
                 {
-                    b.Property<int>("DepartmentId")
+                    b.Property<int>("TrainingProgramId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated")
@@ -135,7 +132,7 @@ namespace workforcemanagement.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 50);
 
-                    b.HasKey("DepartmentId");
+                    b.HasKey("TrainingProgramId");
 
                     b.ToTable("TrainingProgram");
                 });
@@ -156,8 +153,8 @@ namespace workforcemanagement.Migrations
             modelBuilder.Entity("Bangazon.Models.Employee", b =>
                 {
                     b.HasOne("Bangazon.Models.Computer", "Computer")
-                        .WithOne("Employee")
-                        .HasForeignKey("Bangazon.Models.Employee", "ComputerId")
+                        .WithMany()
+                        .HasForeignKey("ComputerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Bangazon.Models.Department", "Department")

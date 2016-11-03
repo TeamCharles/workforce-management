@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace workforcemanagement.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,6 @@ namespace workforcemanagement.Migrations
                     ComputerId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "strftime('%Y-%m-%d %H:%M:%S')"),
-                    EmployeeId = table.Column<int>(nullable: true),
                     Make = table.Column<string>(nullable: false),
                     Model = table.Column<string>(nullable: false),
                     SerialNumber = table.Column<string>(nullable: false)
@@ -44,7 +43,7 @@ namespace workforcemanagement.Migrations
                 name: "TrainingProgram",
                 columns: table => new
                 {
-                    DepartmentId = table.Column<int>(nullable: false)
+                    TrainingProgramId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "strftime('%Y-%m-%d %H:%M:%S')"),
                     Description = table.Column<string>(maxLength: 255, nullable: false),
@@ -52,7 +51,7 @@ namespace workforcemanagement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TrainingProgram", x => x.DepartmentId);
+                    table.PrimaryKey("PK_TrainingProgram", x => x.TrainingProgramId);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,7 +108,7 @@ namespace workforcemanagement.Migrations
                         name: "FK_Attendee_TrainingProgram_ProgramId",
                         column: x => x.ProgramId,
                         principalTable: "TrainingProgram",
-                        principalColumn: "DepartmentId",
+                        principalColumn: "TrainingProgramId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -126,8 +125,7 @@ namespace workforcemanagement.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_ComputerId",
                 table: "Employee",
-                column: "ComputerId",
-                unique: true);
+                column: "ComputerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_DepartmentId",
