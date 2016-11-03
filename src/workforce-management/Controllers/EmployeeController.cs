@@ -36,5 +36,11 @@ namespace workforce_management.Controllers
             model.Employees = await context.Employee.Where(e => e.EndDate == null).OrderBy(e => e.LastName).ToListAsync();
             return View(model);
         }
+        public async Task<IActionResult> Detail()
+        {
+            var model = new EmployeeList(context);
+            model.Employees = await context.Employee.Where(e => e.EndDate == null).OrderBy(e => e.LastName).ToListAsync();
+            return View(model);
+        }
     }
 }

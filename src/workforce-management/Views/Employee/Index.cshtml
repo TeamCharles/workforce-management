@@ -7,12 +7,15 @@
     <thead>
         <th>Name</th>
         <th>Department</th>
+        <th>Details</th>
     </thead>
     <tbody>
         @foreach (Employee employee in @Model.Employees)
             { 
                 <tr>
-                    <td><a asp-controller="Employee" asp-action="Detail" asp-route-id="@employee.EmployeeId">@Html.DisplayFor(model => employee.FirstName)</a></td>
+                    <td >@Html.DisplayFor(model => employee.FirstName)</td>
+                    <td>@Html.DisplayFor(model => employee.DepartmentId)</td>
+                    <td><a class="btn btn-primary btn-xs" asp-controller="Employee" asp-action="Detail" asp-route-id="@employee.EmployeeId">Details</a></td>
                 </tr>
             }
     </tbody>
