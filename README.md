@@ -1,4 +1,4 @@
-# Bangazon Web Initial Site
+# Bangazon Workforce Management
 
 ## Dependencies
 
