@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BangazonWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using workforce_management.ViewModels;
+using Bangazon.Models;
 
 namespace workforce_management.Controllers
 {
@@ -41,6 +42,11 @@ namespace workforce_management.Controllers
         {
             var model = new TrainingProgramIndex();
             model.TrainingPrograms = from program in context.TrainingProgram select program;
+            foreach (TrainingProgram program in model.TrainingPrograms)
+            {
+                int count = context.Attendee.Count(a => a.ProgramId == program.TrainingProgramId);
+                model.AttendeeCount.Add(program.TrainingProgramId, count);
+            }
             return View(model);
         }
     }
