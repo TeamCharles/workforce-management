@@ -13,7 +13,7 @@ namespace Bangazon.Models
     public class TrainingProgram
     {
         [Key]
-        public int DepartmentId { get; set; }
+        public int TrainingProgramId { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
