@@ -43,67 +43,69 @@ namespace BangazonWeb.Data
 
                 context.SaveChanges();
 
+                var rand = new Random();
+
                 var computer = new Computer[]
                      {
                         new Computer {
                            Make = "Apple",
                            Model = "MacBook Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Apple",
                            Model = "MacBook Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Apple",
                            Model = "MacBook Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Apple",
                            Model = "MacBook Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Apple",
                            Model = "MacBook Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Apple",
                            Model = "MacBook Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Apple",
                            Model = "MacBook Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Dell",
                            Model = "Inspiron Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Dell",
                            Model = "Inspiron Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Dell",
                            Model = "Inspiron Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Dell",
                            Model = "Inspiron Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         },
                         new Computer {
                            Make = "Dell",
                            Model = "Inspiron Pro",
-                           SerialNumber = new Random().ToString()
+                           SerialNumber = rand.Next(10000).ToString()
                         }
                      };
 
@@ -218,7 +220,28 @@ namespace BangazonWeb.Data
 
                 context.SaveChanges();
 
+                var attendees = new Attendee[]
+                    {
+                        new Attendee {
+                            EmployeeId = 1,
+                            ProgramId = 1,
+                        },
+                        new Attendee {
+                            EmployeeId = 2,
+                            ProgramId = 2
+                        },
+                        new Attendee {
+                            EmployeeId = 2,
+                            ProgramId = 3
+                        }
+                    };
 
+                foreach (Attendee p in attendees)
+                {
+                    context.Attendee.Add(p);
+                }
+
+                context.SaveChanges();
             };
         }
     }
