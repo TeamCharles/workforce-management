@@ -22,7 +22,6 @@ namespace workforce_management.Controllers
          **/
         private BangazonContext context;
 
-
         /**
          * Purpose: Initializes the TrainingProgramController with a reference to the database context
          * Arguments:
