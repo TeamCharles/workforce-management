@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
-namespace workforce_management
+namespace BangazonWeb
 {
     public class Startup
     {
@@ -57,6 +57,9 @@ namespace workforce_management
             }
 
             app.UseStaticFiles();
+
+            DbInitializer.Initialize(app.ApplicationServices);
+
 
             app.UseMvc(routes =>
             {

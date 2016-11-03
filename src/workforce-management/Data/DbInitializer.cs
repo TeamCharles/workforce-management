@@ -192,14 +192,43 @@ namespace BangazonWeb.Data
                         },
                         new Department {
                             Name = "Web Development",
-                            Description = ""
+                            Description = "The Web Development Department is located in San Fransisco at our second largest office."
                         },
                         new Department {
                             Name = "Warehouse and Shipping",
-                            Description = ""
+                            Description = "The Bangazon warehouse is located in Mexico."
                         }
                     };
 
+                foreach (Department d in department)
+                    {
+                    context.Department.Add(d);
+                    }
+
+                context.SaveChanges();
+
+                var trainingProgram = new TrainingProgram[]
+                    {
+                        new TrainingProgram {
+                            Name = "SQL for Squares",
+                            Description = "Surely the title tells you enough"
+                        },
+                        new TrainingProgram {
+                            Name = "PowerPoint for Developers",
+                            Description = "Who knew PowerPoint was so powerful!"
+                        },
+                        new TrainingProgram {
+                            Name = "Visual Studio for JavaScript Developers",
+                            Description = "Your computer is probably broken!"
+                        }
+                    };
+
+                foreach(TrainingProgram p in trainingProgram)
+                    {
+                    context.TrainingProgram.Add(p);
+                    }
+
+                context.SaveChanges();
 
 
             };

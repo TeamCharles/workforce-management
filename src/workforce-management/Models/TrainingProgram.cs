@@ -10,7 +10,7 @@ namespace Bangazon.Models
      * Purpose: Represents the Program table in the database
      * Author: Matt Kraatz
      */
-    public class Program
+    public class TrainingProgram
     {
         [Key]
         public int DepartmentId { get; set; }

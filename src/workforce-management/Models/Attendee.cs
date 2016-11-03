@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,7 +24,7 @@ namespace Bangazon.Models
 
         [Required]
         public int ProgramId { get; set; }
-        public Program Program { get; set; }
+        public TrainingProgram Program { get; set; }
 
     }
 }

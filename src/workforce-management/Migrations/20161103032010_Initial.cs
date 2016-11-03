@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace workforcemanagement.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,6 +15,7 @@ namespace workforcemanagement.Migrations
                     ComputerId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "strftime('%Y-%m-%d %H:%M:%S')"),
+                    EmployeeId = table.Column<int>(nullable: true),
                     Make = table.Column<string>(nullable: false),
                     Model = table.Column<string>(nullable: false),
                     SerialNumber = table.Column<string>(nullable: false)
@@ -40,7 +41,7 @@ namespace workforcemanagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Program",
+                name: "TrainingProgram",
                 columns: table => new
                 {
                     DepartmentId = table.Column<int>(nullable: false)
@@ -51,7 +52,7 @@ namespace workforcemanagement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Program", x => x.DepartmentId);
+                    table.PrimaryKey("PK_TrainingProgram", x => x.DepartmentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,7 +64,7 @@ namespace workforcemanagement.Migrations
                     ComputerId = table.Column<int>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "strftime('%Y-%m-%d %H:%M:%S')"),
                     DepartmentId = table.Column<int>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: true),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false)
@@ -105,9 +106,9 @@ namespace workforcemanagement.Migrations
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Attendee_Program_ProgramId",
+                        name: "FK_Attendee_TrainingProgram_ProgramId",
                         column: x => x.ProgramId,
-                        principalTable: "Program",
+                        principalTable: "TrainingProgram",
                         principalColumn: "DepartmentId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -125,7 +126,8 @@ namespace workforcemanagement.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_ComputerId",
                 table: "Employee",
-                column: "ComputerId");
+                column: "ComputerId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_DepartmentId",
@@ -142,7 +144,7 @@ namespace workforcemanagement.Migrations
                 name: "Employee");
 
             migrationBuilder.DropTable(
-                name: "Program");
+                name: "TrainingProgram");
 
             migrationBuilder.DropTable(
                 name: "Computer");

@@ -8,8 +8,8 @@ using BangazonWeb.Data;
 namespace workforcemanagement.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    [Migration("20161102174618_initial")]
-    partial class initial
+    [Migration("20161103032010_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,8 @@ namespace workforcemanagement.Migrations
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasDefaultValueSql("strftime('%Y-%m-%d %H:%M:%S')");
+
+                    b.Property<int?>("EmployeeId");
 
                     b.Property<string>("Make")
                         .IsRequired();
@@ -96,7 +98,7 @@ namespace workforcemanagement.Migrations
 
                     b.Property<int>("DepartmentId");
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<DateTime?>("EndDate");
 
                     b.Property<string>("FirstName")
                         .IsRequired();
@@ -108,14 +110,15 @@ namespace workforcemanagement.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.HasIndex("ComputerId");
+                    b.HasIndex("ComputerId")
+                        .IsUnique();
 
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Employee");
                 });
 
-            modelBuilder.Entity("Bangazon.Models.Program", b =>
+            modelBuilder.Entity("Bangazon.Models.TrainingProgram", b =>
                 {
                     b.Property<int>("DepartmentId")
                         .ValueGeneratedOnAdd();
@@ -134,7 +137,7 @@ namespace workforcemanagement.Migrations
 
                     b.HasKey("DepartmentId");
 
-                    b.ToTable("Program");
+                    b.ToTable("TrainingProgram");
                 });
 
             modelBuilder.Entity("Bangazon.Models.Attendee", b =>
@@ -144,7 +147,7 @@ namespace workforcemanagement.Migrations
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Bangazon.Models.Program", "Program")
+                    b.HasOne("Bangazon.Models.TrainingProgram", "Program")
                         .WithMany()
                         .HasForeignKey("ProgramId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -153,8 +156,8 @@ namespace workforcemanagement.Migrations
             modelBuilder.Entity("Bangazon.Models.Employee", b =>
                 {
                     b.HasOne("Bangazon.Models.Computer", "Computer")
-                        .WithMany()
-                        .HasForeignKey("ComputerId")
+                        .WithOne("Employee")
+                        .HasForeignKey("Bangazon.Models.Employee", "ComputerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Bangazon.Models.Department", "Department")
