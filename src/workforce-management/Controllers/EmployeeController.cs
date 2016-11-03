@@ -32,15 +32,13 @@ namespace workforce_management.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
-            var model = new EmployeeList(context);
+            var model = new EmployeeList();
             model.Employees = await context.Employee.Where(e => e.EndDate == null).OrderBy(e => e.LastName).ToListAsync();
             return View(model);
         }
-        public async Task<IActionResult> Detail()
+        public IActionResult Detail()
         {
-            var model = new EmployeeList(context);
-            model.Employees = await context.Employee.Where(e => e.EndDate == null).OrderBy(e => e.LastName).ToListAsync();
-            return View(model);
+            return View();
         }
     }
 }

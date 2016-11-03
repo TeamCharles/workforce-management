@@ -19,7 +19,5 @@ namespace workforce_management.ViewModels
     {
         public IEnumerable<Employee> Employees { get; set; }
 
-        public EmployeeList(BangazonContext ctx) { }
-
     }
 }
