@@ -18,24 +18,26 @@ namespace workforce_management.Controllers
          * PURPOSE: Creates routes for main index view 
          * AUTHOR: Garrett Vangilder
          * METHODS:
-         *   Index() - Constructor the list view of employees
+         *   Index() - View list of employees
          **/
     public class EmployeeController : Controller
     {
         private BangazonContext context;
 
+        //Currently this controller attaches the database context to the employee controller
         public EmployeeController(BangazonContext ctx)
         {
             context = ctx;
         }
-
-        // GET: /<controller>/
+        //This method provides the index view of the Employee controller. This diplays the employee list
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var model = new EmployeeList();
             model.Employees = await context.Employee.Where(e => e.EndDate == null).OrderBy(e => e.LastName).ToListAsync();
             return View(model);
         }
+        //This method provides the Detail view for each individual employee.
         public IActionResult Detail()
         {
             return View();
