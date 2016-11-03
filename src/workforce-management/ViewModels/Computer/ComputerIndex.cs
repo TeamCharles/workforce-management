@@ -9,11 +9,11 @@ namespace workforce_management.ViewModels
 
     /**
      * Class: ComputerIndex
-     * Purpose: Stores a list of all computers
+     * Purpose: Stores a list of all computers with the assigned employee (or null)
      * Author: Matt Hamil
      */
     public class ComputerIndex
     {
-        public IEnumerable<Computer> ComputerList { get; set; }
+        public Dictionary<Computer, Employee> ComputerDictionary = new Dictionary<Computer, Employee>();
     }
 }

@@ -48,11 +48,31 @@ namespace workforce_management.Controllers
             ComputerIndex viewModel = new ComputerIndex();
 
             // Select all computers that are not assigned to employees
-            viewModel.ComputerList = (
-                from employee in context.Employee.Include(e => e.Computer)
+            var unassignedComputerList = (
                 from computer in context.Computer
                 where context.Employee.All(e => e.ComputerId != computer.ComputerId)
                 select computer).ToList();
+
+            // Select all computers that are assigned to employees
+            var assignedComputerList = (
+                from computer in context.Computer
+                where unassignedComputerList.All(c => c.ComputerId != computer.ComputerId)
+                select computer).Distinct().ToList();
+
+            foreach (Computer computer in assignedComputerList)
+            {
+                var assignedEmployee =  (
+                    from employee in context.Employee
+                    where employee.ComputerId == computer.ComputerId
+                    select employee).FirstOrDefault();
+
+                viewModel.ComputerDictionary.Add(computer, assignedEmployee);
+            }
+
+            foreach (Computer computer in unassignedComputerList)
+            {
+                viewModel.ComputerDictionary.Add(computer, null);
+            }
 
             return View(viewModel);
         }
