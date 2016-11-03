@@ -13,6 +13,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace workforce_management.Controllers
 {
+    /**
+         * CLASS: EmployeeController
+         * PURPOSE: Creates routes for main index view 
+         * AUTHOR: Garrett Vangilder
+         * METHODS:
+         *   Index() - Constructor the list view of employees
+         **/
     public class EmployeeController : Controller
     {
         private BangazonContext context;
