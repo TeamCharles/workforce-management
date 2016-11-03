@@ -13,7 +13,7 @@ namespace BangazonWeb.Data
         public DbSet<Computer> Computer { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<Employee> Employee { get; set; }
-        public DbSet<Program> Program { get; set; }
+        public DbSet<TrainingProgram> TrainingProgram { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,7 +33,7 @@ namespace BangazonWeb.Data
                 .Property(b => b.DateCreated)
                 .HasDefaultValueSql("strftime('%Y-%m-%d %H:%M:%S')");
 
-            modelBuilder.Entity<Program>()
+            modelBuilder.Entity<TrainingProgram>()
                 .Property(b => b.DateCreated)
                 .HasDefaultValueSql("strftime('%Y-%m-%d %H:%M:%S')");
         }
