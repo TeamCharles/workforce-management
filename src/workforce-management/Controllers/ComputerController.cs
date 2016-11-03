@@ -45,13 +45,16 @@ namespace workforce_management.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ComputerIndex viewModel = new ComputerIndex();
+
             // Select all computers that are not assigned to employees
-            var computers = (
+            viewModel.ComputerList = (
                 from employee in context.Employee.Include(e => e.Computer)
                 from computer in context.Computer
                 where context.Employee.All(e => e.ComputerId != computer.ComputerId)
                 select computer).ToList();
-            return View(computers);
+
+            return View(viewModel);
         }
 
 

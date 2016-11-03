@@ -1,0 +1,31 @@
+﻿@model workforce_management.ViewModels.ComputerIndex
+@using Bangazon.Models;
+
+<h2>Computers</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Serial Number</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Employee</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="5"><a href="">Add a new Computer</a></td>
+        </tr>
+        @foreach (Computer computer in Model.ComputerList)
+        {
+            <tr>
+                <td>computer.SerialNumber</td>
+                <td>computer.Make</td>
+                <td>computer.Model</td>
+                <td>{computer.Employee ? computer.Employee : "Unassigned" }</td>
+                <td><span style="color:firebrick" class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+            </tr>
+        }
+    </tbody>
+</table>
