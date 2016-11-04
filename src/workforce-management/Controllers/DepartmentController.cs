@@ -30,7 +30,7 @@ namespace workforce_management.Controllers
             model.Departments = await context.Department.ToListAsync();
             return View(model);
         }
-        [Http]
+        [HttpGet]
         public IActionResult Add()
         {
             var model = new SingleDepartment();
