@@ -30,9 +30,8 @@ namespace workforce_management.Controllers
             model.Departments = await context.Department.ToListAsync();
             return View(model);
         }
-
-        [HttpGet]
-        public  IActionResult Add()
+        [Http]
+        public IActionResult Add()
         {
             var model = new SingleDepartment();
             model.Employees = context.Employee
@@ -47,13 +46,20 @@ namespace workforce_management.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(Department department)
+        public async Task<IActionResult> Add(SingleDepartment NewDepartment)
         {
             if (ModelState.IsValid)
             {
-                context.Add(department);
+                foreach (SelectListItem employee in NewDepartment.Employees)
+                {
+                    int chechkedValue = Convert.ToInt16(employee.Value);
+                    var Employee = await context.Employee.Where(e => e.EmployeeId == chechkedValue).OrderBy(e => e.LastName).ToListAsync();
+
+                };
+
+                context.Add(NewDepartment);
                 await context.SaveChangesAsync();
             }
 
