@@ -1,4 +1,4 @@
-﻿@model workforce_management.ViewModels.EmployeeList
+﻿@model workforce_management.ViewModels.SingleDepartment
 @using Bangazon.Models;
 @{
     ViewData["Title"] = "Add a Department";
@@ -24,32 +24,9 @@
                 <span asp-validation-for="NewDepartment.Description" class="text-danger"></span>
             </div>
         </div>
-
-        @foreach (Employee employee in @Model.Employees)
-        {
-            <asp:ListItem Text=@Html.DisplayFor(model => employee.FirstName) Value=@employee.EmployeeId />
-        }
-
         <dl class="dropdown">
-
-            <dt>
-                <a href="#">
-                    <p class="multiSel"></p>
-                </a>
-            </dt>
-
-            <dd>
-                <div class="mutliSelect">
-                    <ul>
-                        @foreach (Employee employee in @Model.Employees)
-                        {
-                           <li><input type="checkbox" value=@employee.EmployeeId> @Html.DisplayFor(model => employee.FirstName) @Html.DisplayFor(model => employee.LastName) </li>
-                        }
-                    </ul>
-                </div>
-            </dd>
+            @Html.DropDownListFor(m => m.department, Model.Employees, new { multiple = "true" })
         </dl>
-
             <input type="submit" value="Add New Department" class="btn btn-default" />
 </div>
 </form>

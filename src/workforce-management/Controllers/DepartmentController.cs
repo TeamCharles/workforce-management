@@ -9,6 +9,7 @@ using workforce_management.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace workforce_management.Controllers
 {
@@ -33,12 +34,21 @@ namespace workforce_management.Controllers
         [HttpGet]
         public  IActionResult Add()
         {
-            var model = new EmployeeList();
-            model.Employees = context.Employee.Where(e => e.EndDate == null).OrderBy(e => e.LastName).ToList();
+            var model = new SingleDepartment();
+            model.Employees = context.Employee
+                    .OrderBy(e => e.LastName)
+                    .AsEnumerable()
+                    .Where(e => e.EndDate == null)
+                    .Select(li => new SelectListItem
+                    {
+                        Text = li.LastName + " " + li.FirstName,
+                        Value = li.EmployeeId.ToString()
+                    });
             return View(model);
         }
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(Department department)
         {
             if (ModelState.IsValid)

@@ -14,7 +14,7 @@ namespace Bangazon.Models
     {
         [Key]
         public int DepartmentId { get; set; }
-
+   
         [Required]
         [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

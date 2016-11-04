@@ -5,18 +5,15 @@ using System.Threading.Tasks;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Mvc;
 using BangazonWeb.Data;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace workforce_management.ViewModels
 {
-    /**
-     * Class: DepartmentList
-     * Purpose: ViewModel for the DepartmentList
-     * Author: Garrett Vangilder
-     */
-    public class DepartmentList
+    public class SingleDepartment
     {
-        public IEnumerable<Department> Departments { get; set; }
+        public IEnumerable<SelectListItem> Employees { get; set; }
+
+        public Department department { get; set; }
 
     }
 }
