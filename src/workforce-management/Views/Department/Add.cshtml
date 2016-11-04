@@ -13,17 +13,43 @@
         <div class="form-group">
             <label asp-for="Department.Name" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="NewDepartment.Name" class="form-control" />
+                <input asp-for="NewDepartment.Name" class="form-control" placeholder="Department Name" />
                 <span asp-validation-for="NewDepartment.Name" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
             <label asp-for="NewDepartment.Description" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="NewDepartment.Description" class="form-control" />
+                <input asp-for="NewDepartment.Description" class="form-control" placeholder="Department Description" />
                 <span asp-validation-for="NewDepartment.Description" class="text-danger"></span>
             </div>
         </div>
-        <input type="submit" value="Add New Product" class="btn btn-default" />
-    </div>
+
+        @foreach (Employee employee in @Model.Employees)
+        {
+            <asp:ListItem Text=@Html.DisplayFor(model => employee.FirstName) Value=@employee.EmployeeId />
+        }
+
+        <dl class="dropdown">
+
+            <dt>
+                <a href="#">
+                    <p class="multiSel"></p>
+                </a>
+            </dt>
+
+            <dd>
+                <div class="mutliSelect">
+                    <ul>
+                        @foreach (Employee employee in @Model.Employees)
+                        {
+                           <li><input type="checkbox" value=@employee.EmployeeId> @Html.DisplayFor(model => employee.FirstName) @Html.DisplayFor(model => employee.LastName) </li>
+                        }
+                    </ul>
+                </div>
+            </dd>
+        </dl>
+
+            <input type="submit" value="Add New Department" class="btn btn-default" />
+</div>
 </form>

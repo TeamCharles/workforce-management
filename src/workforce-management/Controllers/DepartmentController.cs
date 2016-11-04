@@ -8,6 +8,7 @@ using Bangazon.Models;
 using workforce_management.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Routing;
 
 namespace workforce_management.Controllers
 {
@@ -30,11 +31,25 @@ namespace workforce_management.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public  IActionResult Add()
         {
             var model = new EmployeeList();
-            model.Employees = await context.Employee.Where(e => e.EndDate == null).OrderBy(e => e.LastName).ToListAsync();
+            model.Employees = context.Employee.Where(e => e.EndDate == null).OrderBy(e => e.LastName).ToList();
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Add(Department department)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Add(department);
+                await context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index", new RouteValueDictionary(
+                 new { controller = "Department", action = "Index" }));
+        }
+
     }
 }
