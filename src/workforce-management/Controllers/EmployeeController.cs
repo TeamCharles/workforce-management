@@ -29,15 +29,35 @@ namespace workforce_management.Controllers
         {
             context = ctx;
         }
-        //This method provides the index view of the Employee controller. This diplays the employee list
+
+        /**
+              * Purpose: Provides the index view
+              * Arguments:
+              *     N/A
+              * Return:
+              *     Returns the view that includes the employee list as well as the department name for the employee
+              */
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var model = new EmployeeList();
             model.Employees = await context.Employee.Where(e => e.EndDate == null).OrderBy(e => e.LastName).ToListAsync();
+
+            foreach (Employee employee in model.Employees)
+            {
+                employee.Department = await context.Department.Where(e => e.DepartmentId == employee.DepartmentId).SingleAsync();
+            }
+
             return View(model);
         }
-        //This method provides the Detail view for each individual employee.
+
+        /**
+              * Purpose: Provides the detail view for each individual employee
+              * Arguments:
+              *     N/A
+              * Return:
+              *     At this point the function will redirect the user to the detail view through the return statement.
+              */
         public IActionResult Detail()
         {
             return View();

@@ -14,7 +14,7 @@
             { 
                 <tr>
                     <td >@Html.DisplayFor(model => employee.FirstName)</td>
-                    <td>@Html.DisplayFor(model => employee.DepartmentId)</td>
+                    <td>@Html.DisplayFor(model => employee.Department.Name)</td>
                     <td><a class="btn btn-primary btn-xs" asp-controller="Employee" asp-action="Detail" asp-route-id="@employee.EmployeeId">Details</a></td>
                 </tr>
             }
