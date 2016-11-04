@@ -9,7 +9,7 @@ namespace workforce_management.ViewModels
 
     /**
      * Class: ComputerIndex
-     * Purpose: Stores employee list, computer list, and holds a reference to the employee assigned a new computer (if created)
+     * Purpose: Stores new computer and a reference to the employee id assigned a new computer (if created)
      * Author: Matt Hamil
      */
     public class ComputerAdd

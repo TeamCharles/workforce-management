@@ -18,6 +18,8 @@ namespace workforce_management.Controllers
      * Author: Matt Hamil
      * Methods:
      *     IActionResult Index() - Computer list view
+     *     IActionResult Add() - Computer add view
+     *     Task<IActionResult> Add(Computer computerAdd) - Add new computer to database
      */
     public class ComputerController : Controller
     {
@@ -77,6 +79,18 @@ namespace workforce_management.Controllers
             return View(viewModel);
         }
 
+
+        /**
+         * Purpose: Add new computer form
+         * Return:
+         *     Add computer view
+         */
+        [HttpGet]
+        public IActionResult Add()
+        {
+            ComputerAdd model = new ComputerAdd();
+            return View(model);
+        }
 
         /**
          * Purpose: Adds a new computer to the database and can update employee if assigned
