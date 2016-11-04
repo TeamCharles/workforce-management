@@ -13,20 +13,22 @@
         <div class="form-group">
             <label asp-for="NewDepartment.Name" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="NewDepartment.Name" class="form-control" placeholder="Department Name" />
+                <input asp-for="NewDepartment.Name" class="form-control departmentName" placeholder="Department Name" />
                 <span asp-validation-for="NewDepartment.Name" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
             <label asp-for="NewDepartment.Description" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="NewDepartment.Description" class="form-control" placeholder="Department Description" />
+                <input asp-for="NewDepartment.Description" class="form-control departmentDescription" placeholder="Department Description" />
                 <span asp-validation-for="NewDepartment.Description" class="text-danger"></span>
             </div>
         </div>
         <dl class="dropdown">
             @Html.DropDownListFor(m => m.department, Model.Employees, new { multiple = "true" })
         </dl>
-            <input type="submit" value="Add New Department" class="btn btn-default" />
+            <input type="submit" value="Add New Department" class="btn btn-default" id="departmentBtn" />
 </div>
 </form>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/site.min.js"></script>
