@@ -120,14 +120,13 @@ namespace workforce_management.Controllers
                 if (assignedEmployee != null)
                 {
                     // Assign the new computer to the employee
-                    assignedEmployee.Computer = newComputer;
+                    assignedEmployee.ComputerId = newComputer.ComputerId;
                     context.Update(assignedEmployee);
                     await context.SaveChangesAsync();
                 }
 
                 // Return to Computer list view
-                return RedirectToAction("Index", new RouteValueDictionary(
-                        new { controller = "Computer", action = "Index" }));
+                return RedirectToAction("Index");
             }
 
             return View(computerAdd);
