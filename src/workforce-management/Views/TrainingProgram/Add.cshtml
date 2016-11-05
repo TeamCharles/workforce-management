@@ -1,0 +1,38 @@
+﻿@model workforce_management.ViewModels.TrainingProgramAdd
+
+<h2>Add a New Training Program</h2>
+
+<form asp-action="Add">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="NewNewTrainingProgram.Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NewTrainingProgram.Name" class="form-control" />
+                <span asp-validation-for="NewTrainingProgram.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="NewTrainingProgram.Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NewTrainingProgram.Description" class="form-control" />
+                <span asp-validation-for="NewTrainingProgram.Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="NewTrainingProgram.EmployeeId" class="col-md-2 control-label">Product Type</label>
+            <div class="col-md-10">
+                @Html.DropDownList("NewTrainingProgram.EmployeeId", (MultiSelectList)Model.Employees, "Asign Employees", new { multiple = "multiple" })
+                <span asp-validation-for="NewProduct.ProductSubTypeId" class="text-danger"></span>
+            </div>
+        </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save New Training Program" class="btn btn-default" />
+                </div>
+            </div>
+        }
+    </div>
+</form>
+
