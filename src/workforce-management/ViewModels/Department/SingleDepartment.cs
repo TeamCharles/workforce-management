@@ -13,7 +13,7 @@ namespace workforce_management.ViewModels
     {
         public IEnumerable<SelectListItem> Employees { get; set; }
 
-        public Department department { get; set; }
+        public Department NewDepartment { get; set; }
 
     }
 }

@@ -24,13 +24,8 @@ namespace workforce_management.Controllers
             context = ctx;
         }
         //This method provides the index view of the Employee controller. This diplays the employee list
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var model = new DepartmentList();
-            model.Departments = await context.Department.ToListAsync();
-            return View(model);
-        }
+
+
        /**
          * Purpose: Provides the Add view
          * Arguments:
@@ -53,6 +48,7 @@ namespace workforce_management.Controllers
                     });
             return View(model);
         }
+
         /**
          * Purpose: Provides the Add view
          * Arguments:
@@ -62,20 +58,31 @@ namespace workforce_management.Controllers
          **/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(SingleDepartment NewDepartment)
+        public async Task<IActionResult> Add(SingleDepartment singleDepartment)
         {
             if (ModelState.IsValid)
             {
-                context.Add(NewDepartment.department);
+                Department newDepartment = singleDepartment.NewDepartment;
+
+                context.Add(newDepartment);
                 await context.SaveChangesAsync();
 
-                return RedirectToAction("Index", new RouteValueDictionary(
-                    new { controller = "Department", action = "Index" }));
+                if (newDepartment.Employees == null)
+                {
+                    return RedirectToAction("Index");
+
+                }
+                else
+                {
+                    //Change Employee Department logic goes here. 
+                }
             }
-            Console.WriteLine("Not Working!");
+
+
             var model = new SingleDepartment();
 
-            return View(model);
+            return RedirectToAction("Index", new RouteValueDictionary(
+                new { controller = "Department", action = "Index" }));
         }
 
     }

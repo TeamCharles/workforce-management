@@ -6,7 +6,7 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Add">
+<form asp-controller="Department" asp-action="Add">
     <div class="form-horizontal">
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -25,10 +25,12 @@
             </div>
         </div>
         <dl class="dropdown">
-            @Html.DropDownListFor(m => m.department, Model.Employees, new { multiple = "true" })
+            @Html.DropDownListFor(m => m.NewDepartment, Model.Employees, new { multiple = "true" })
         </dl>
             <input type="submit" value="Add New Department" class="btn btn-default" id="departmentBtn" />
 </div>
 </form>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/site.min.js"></script>
+
+
