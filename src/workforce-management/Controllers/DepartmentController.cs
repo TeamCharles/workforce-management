@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Diagnostics;
 
 namespace workforce_management.Controllers
 {
@@ -53,19 +54,24 @@ namespace workforce_management.Controllers
         {
             if (ModelState.IsValid)
             {
-                foreach (SelectListItem employee in NewDepartment.Employees)
-                {
-                    int chechkedValue = Convert.ToInt16(employee.Value);
-                    var Employee = await context.Employee.Where(e => e.EmployeeId == chechkedValue).OrderBy(e => e.LastName).ToListAsync();
+                Debugger.Break();
+                //foreach (SelectListItem employee in NewDepartment.Employees)
+                //{
+                //    int chechkedValue = Convert.ToInt16(employee.Value);
+                //    var Employee = await context.Employee.Where(e => e.EmployeeId == chechkedValue).OrderBy(e => e.LastName).ToListAsync();
 
-                };
-
-                context.Add(NewDepartment);
+                //};
+                Console.WriteLine("Working");
+                context.Add(NewDepartment.department);
                 await context.SaveChangesAsync();
-            }
 
-            return RedirectToAction("Index", new RouteValueDictionary(
-                 new { controller = "Department", action = "Index" }));
+                return RedirectToAction("Index", new RouteValueDictionary(
+                    new { controller = "Department", action = "Index" }));
+            }
+            Console.WriteLine("Not Working!");
+            var model = new SingleDepartment();
+
+            return View(model);
         }
 
     }

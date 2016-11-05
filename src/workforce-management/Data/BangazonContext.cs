@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Bangazon.Models;
+using System;
 
 namespace BangazonWeb.Data
 {
@@ -36,6 +37,11 @@ namespace BangazonWeb.Data
             modelBuilder.Entity<TrainingProgram>()
                 .Property(b => b.DateCreated)
                 .HasDefaultValueSql("strftime('%Y-%m-%d %H:%M:%S')");
+        }
+
+        internal void Add(object newDepartment)
+        {
+            throw new NotImplementedException();
         }
     }
 }
