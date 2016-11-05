@@ -31,7 +31,13 @@ namespace workforce_management.Controllers
             model.Departments = await context.Department.ToListAsync();
             return View(model);
         }
-
+       /**
+         * Purpose: Provides the Add view
+         * Arguments:
+         *    N/A
+         * Return:
+         *     Redirect to the Department Index if the model is valid, will redirect the user back to the form if it is invalid. 
+         **/
         [HttpGet]
         public IActionResult Add()
         {
@@ -47,21 +53,19 @@ namespace workforce_management.Controllers
                     });
             return View(model);
         }
-
+        /**
+         * Purpose: Provides the Add view
+         * Arguments:
+         *    This method takes a newdepartment as a paramenter, the new department is the one you would like to post into the database.
+         * Return:
+         *     Redirect to the Department Index if the model is valid, will redirect the user back to the form if it is invalid. 
+         **/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(SingleDepartment NewDepartment)
         {
             if (ModelState.IsValid)
             {
-                Debugger.Break();
-                //foreach (SelectListItem employee in NewDepartment.Employees)
-                //{
-                //    int chechkedValue = Convert.ToInt16(employee.Value);
-                //    var Employee = await context.Employee.Where(e => e.EmployeeId == chechkedValue).OrderBy(e => e.LastName).ToListAsync();
-
-                //};
-                Console.WriteLine("Working");
                 context.Add(NewDepartment.department);
                 await context.SaveChangesAsync();
 
