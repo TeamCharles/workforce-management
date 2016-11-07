@@ -14,6 +14,7 @@ namespace workforce_management.Controllers
      * Methods:
      *     constructor DepartmentController() - returns instance of DepartmentController
      *     view Index() - Queries for departments and returns model to razor view
+     *     view Index(int id) - Quires for specific department details and employees and returns model to razor view
      */
 
     public class DepartmentController : Controller
@@ -38,7 +39,7 @@ namespace workforce_management.Controllers
          * Arguments:
          *     none
          * Return:
-         *     view for razor template to index route
+         *     view model for razor template to index route
          */
 
         [HttpGet]
@@ -49,6 +50,15 @@ namespace workforce_management.Controllers
 
             return View(model);
         }
+
+
+        /**
+         * Purpose: Routes http get to detail view for department id passed in
+         * Arguments:
+         *     id - Department id for detail view
+         * Return:
+         *     View model for razor template to detail route
+         */
 
         [HttpGet]
         public IActionResult Detail(int id)
