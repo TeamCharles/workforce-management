@@ -18,9 +18,9 @@ namespace workforce_management.Controllers
          * METHODS:
          *   TrainingProgramController(BangazonContext) - Constructor that saves the database context to a private variable.
          *   IActionResult Index() - Returns a View listing all Training Programs.
+         *   IActionResult Detail() - Returns a View showing the detail of a particular Training Program.
          **/
         private BangazonContext context;
-
 
         /**
          * Purpose: Initializes the TrainingProgramController with a reference to the database context
@@ -47,6 +47,25 @@ namespace workforce_management.Controllers
                 int count = context.Attendee.Count(a => a.ProgramId == program.TrainingProgramId);
                 model.AttendeeCount.Add(program.TrainingProgramId, count);
             }
+            return View(model);
+        }
+
+        /**
+         * Purpose: Creates a View list all Training Programs currently in the database
+         * Arguments:
+         *      int id - TrainingProgramId for the detail being requested
+         * Return:
+         *      View containing a list of all Training Programs
+         */
+        public IActionResult Detail(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            var model = new TrainingProgramDetail();
+            model.TrainingProgram = context.TrainingProgram.Single(p => p.TrainingProgramId == id);
+            model.Attendees = from attendee in context.Attendee from employee in context.Employee where attendee.ProgramId == id where employee.EmployeeId == attendee.EmployeeId select employee;
             return View(model);
         }
     }
