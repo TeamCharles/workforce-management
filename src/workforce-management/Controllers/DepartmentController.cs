@@ -22,7 +22,6 @@ namespace workforce_management.Controllers
      *     constructor DepartmentController() - returns instance of DepartmentController
      *     view Index() - Queries for departments and returns model to razor view
      */
-
     public class DepartmentController : Controller
     {
         private BangazonContext context;
@@ -97,17 +96,20 @@ namespace workforce_management.Controllers
                 Department newDepartment = singleDepartment.NewDepartment;
 
                 context.Add(newDepartment);
+
+                if (newDepartment.Employees != null)
+                {
+                    foreach (Employee employee in newDepartment.Employees)
+                    {
+                        //DO SOMETHING
+                        employee.DepartmentId = newDepartment.DepartmentId;
+                        context.Update(employee);
+                    }
+
+                }
                 await context.SaveChangesAsync();
+                return RedirectToAction("Index");
 
-                if (newDepartment.Employees == null)
-                {
-                    return RedirectToAction("Index");
-
-                }
-                else
-                {
-                    //Change Employee Department logic goes here. 
-                }
             }
 
 
