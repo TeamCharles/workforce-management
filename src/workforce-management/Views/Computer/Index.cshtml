@@ -1,0 +1,34 @@
+﻿@model workforce_management.ViewModels.ComputerIndex
+@using Bangazon.Models;
+
+<h2>Computers</h2>
+
+<input type="button" class="btn btn-primary" value="Add a new Computer" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Serial Number</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Employee</th>
+            <th>@* Empty cell where the delete button will go in each row *@</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (KeyValuePair<Computer, Employee> comp in Model.ComputerDictionary)
+        {
+            Computer computer = comp.Key;
+            Employee employee = comp.Value;
+            <tr>
+                <td>@computer.SerialNumber.ToString()</td>
+                <td>@computer.Make.ToString()</td>
+                <td>@computer.Model.ToString()</td>
+                <td>
+                    @(employee != null ? employee.FirstName + " " + employee.LastName : "Unassigned")
+                </td>
+                <td><span style="color:firebrick" class="glyphicon glyphicon-remove" aria-hidden="true">X</span></td>
+            </tr>
+        }
+    </tbody>
+</table>
