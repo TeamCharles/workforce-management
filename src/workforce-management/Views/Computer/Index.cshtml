@@ -4,7 +4,6 @@
 <h2>Computers</h2>
 <a asp-controller="Computer" asp-action="Add"><input type="submit" value="Add a new Computer" class="btn btn-primary" /></a>
 
-
 <table class="table">
     <thead>
         <tr>
@@ -27,7 +26,7 @@
                 <td>
                     @(employee != null ? employee.FirstName + " " + employee.LastName : "Unassigned")
                 </td>
-                <td><span style="color:firebrick" class="glyphicon glyphicon-remove" aria-hidden="true">X</span></td>
+                <td><span style="color:firebrick" class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
             </tr>
         }
     </tbody>
