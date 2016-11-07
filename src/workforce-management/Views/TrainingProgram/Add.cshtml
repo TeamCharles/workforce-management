@@ -2,12 +2,12 @@
 
 <h2>Add a New Training Program</h2>
 
-<form asp-action="Add">
+<form asp-action="Add" method="post">
     <div class="form-horizontal">
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="NewNewTrainingProgram.Name" class="col-md-2 control-label"></label>
+            <label asp-for="NewTrainingProgram.Name" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="NewTrainingProgram.Name" class="form-control" />
                 <span asp-validation-for="NewTrainingProgram.Name" class="text-danger"></span>
@@ -21,10 +21,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="NewTrainingProgram.EmployeeId" class="col-md-2 control-label">Add Employee</label>
+            <label asp-for="NewTrainingProgram.Attendees" class="col-md-2 control-label">Add Employee</label>
             <div class="col-md-10">
-                @Html.ListBoxFor(e => e.NewTrainingProgram, Model.Employees)
-                <span asp-validation-for="NewTrainingProgram.EmployeeId" class="text-danger"></span>
+                @Html.ListBox("Employees", Model.Employees as MultiSelectList)
+                <span asp-validation-for="NewTrainingProgram.Attendees" class="text-danger"></span>
             </div>
         </div>
             <div class="form-group">

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Bangazon.Models
 {
     /**
-     * Class: Attendee
+     * Class: Attendee  
      * Purpose: Represents the Attendee table in the database
      * Author: Matt Kraatz
      */
@@ -23,8 +23,8 @@ namespace Bangazon.Models
         public Employee Employee { get; set; }
 
         [Required]
-        public int ProgramId { get; set; }
-        public TrainingProgram Program { get; set; }
+        public int TrainingProgramId { get; set; }
+        public TrainingProgram TrainingProgram { get; set; }
 
     }
 }

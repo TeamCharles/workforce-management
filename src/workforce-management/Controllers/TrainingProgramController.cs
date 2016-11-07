@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace workforce_management.Controllers
 {
@@ -21,45 +22,54 @@ namespace workforce_management.Controllers
             context = ctx;
         }
 
-        private bool TrainingProgramExists (int id)
+        private bool TrainingProgramExists(int id)
         {
             return context.TrainingProgram.Count(e => e.TrainingProgramId == id) > 0;
         }
 
-        public  IActionResult Add()
+
+        [HttpGet]
+        public IActionResult Add()
         {
-            var model = new TrainingProgramAdd(context);
+            var model = new TrainingProgramAdd();
+            model.Employees = context.Employee
+                .OrderBy(l => l.LastName)
+                .AsEnumerable()
+                .Select(li => new SelectListItem
+                {
+                    Text = li.LastName,
+                    Value = li.EmployeeId.ToString()
+                });
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(TrainingProgramAdd trainingProgram)
-        {
-            if (!ModelState.IsValid)
+        public async Task<IActionResult> Add(TrainingProgramAdd trainingProgramAdd)
+         {
+            if (ModelState.IsValid)
             {
-                var model = new TrainingProgramAdd(context);
-                model.NewTrainingProgram = trainingProgram.NewTrainingProgram;
-                return View(model);
-            }
-            context.TrainingProgram.Add(trainingProgram.NewTrainingProgram);
-            try
-            {
-                context.SaveChanges();
-            }            
-            catch (DbUpdateException)
-            {
-                if (TrainingProgramExists(trainingProgram.NewTrainingProgram.TrainingProgramId))
+                TrainingProgram newTrainingProgram = trainingProgramAdd.NewTrainingProgram;
+
+                context.Add(newTrainingProgram);
+
+
+                if (trainingProgramAdd.Employees != null)
                 {
-                    return new StatusCodeResult(StatusCodes.Status409Conflict);
+                    foreach (SelectListItem employee in trainingProgramAdd.Employees)
+                    {
+                        Attendee newattendee = new Attendee();
+                        newattendee.EmployeeId = Int32.Parse(employee.Value);
+                        newattendee.TrainingProgramId = newTrainingProgram.TrainingProgramId;
+                    }
                 }
-                else
-                {
-                    throw;
-                }
+
+                await context.SaveChangesAsync();
+                return RedirectToAction("Detail", "TrainingProgram");
             }
-            return RedirectToAction("Detail", "TrainingProgram");
+            return RedirectToAction("Index", "TrainingProgram");
         }
+
     }
 }
                 //context.Add(trainingProgram.NewTrainingProgram);
