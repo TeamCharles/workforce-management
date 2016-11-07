@@ -39,7 +39,14 @@
                 <td>@computer.Make.ToString()</td>
                 <td>@computer.Model.ToString()</td>
                 <td>
-                    @(employee != null ? employee.FirstName + " " + employee.LastName : "Unassigned")
+                    @if (employee != null)
+                    {
+                        <a asp-controller="Employee" asp-action="Detail" asp-route-id="@employee.EmployeeId">@employee.FirstName @employee.LastName</a>
+                    }
+                    else
+                    {
+                        @("Unassigned");
+                    }
                 </td>
                 <td><a asp-controller="Computer" asp-action="Delete" asp-route-id="@computer.ComputerId"><span style="color:firebrick" class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
             </tr>
