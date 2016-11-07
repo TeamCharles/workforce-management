@@ -20,19 +20,19 @@
                 <span asp-validation-for="NewTrainingProgram.Description" class="text-danger"></span>
             </div>
         </div>
-        @*<div class="form-group">
-            <label asp-for="NewTrainingProgram.EmployeeId" class="col-md-2 control-label">Product Type</label>
+        <div class="form-group">
+            <label asp-for="NewTrainingProgram.EmployeeId" class="col-md-2 control-label">Add Employee</label>
             <div class="col-md-10">
-                @Html.DropDownList("NewTrainingProgram.EmployeeId", (MultiSelectList)Model.Employees, "Asign Employees", new { multiple = "multiple" })
-                <span asp-validation-for="NewProduct.ProductSubTypeId" class="text-danger"></span>
+                @Html.ListBoxFor(e => e.NewTrainingProgram, Model.Employees)
+                <span asp-validation-for="NewTrainingProgram.EmployeeId" class="text-danger"></span>
             </div>
-        </div>*@
+        </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Save New Training Program" class="btn btn-default" />
                 </div>
             </div>
-        }
     </div>
 </form>
+                @*@Html.DropDownList("NewTrainingProgram.EmployeeId", @Model.Employees, "Asign Employees")*@
 

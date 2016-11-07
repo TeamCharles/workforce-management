@@ -15,6 +15,8 @@ namespace workforce_management.ViewModels
 
         public TrainingProgram NewTrainingProgram { get; set; }
 
+        public int[] SelectedIds { get; set; }
+
         public TrainingProgramAdd(BangazonContext ctx)
         {
             _context = ctx;
