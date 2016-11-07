@@ -31,6 +31,8 @@ namespace BangazonWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             // Add framework services.
             services.AddMvc();
 
@@ -60,12 +62,16 @@ namespace BangazonWeb
 
             DbInitializer.Initialize(app.ApplicationServices);
 
-
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Department}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "ComputerDelete",
+                    template: "{controller=Computer}/{action=Delete}/{id?}");
             });
         }
     }
