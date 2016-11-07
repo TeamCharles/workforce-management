@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +6,7 @@ using BangazonWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using workforce_management.ViewModels;
 using Bangazon.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace workforce_management.Controllers
 {

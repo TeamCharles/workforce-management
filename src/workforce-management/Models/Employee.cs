@@ -14,6 +14,7 @@ namespace Bangazon.Models
     {
         [Key]
         public int EmployeeId { get; set; }
+
         [Required]
         [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
