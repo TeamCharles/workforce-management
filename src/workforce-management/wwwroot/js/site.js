@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
 
     /**
      * Purpose: Checks to see if the input fields within the department are null or !null.
@@ -17,13 +17,9 @@
 
     $("#departmentBtn").prop("disabled", true);
 
-    $(".departmentName").on("change", function () {
-        entryCheck();
-    });
+    $(".departmentName").on("change", entryCheck);
 
-    $(".departmentDescription").on("change", function () {
-        entryCheck();
-    });
+    $(".departmentDescription").on("change", entryCheck);
     
     /**
      * Purpose: Checks to see if the input fields within the computer add form are null or !null.
