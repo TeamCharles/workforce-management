@@ -94,16 +94,31 @@ namespace workforce_management.Controllers
             if (ModelState.IsValid)
             {
                 Department newDepartment = singleDepartment.NewDepartment;
+                System.Console.WriteLine(newDepartment);
+                System.Console.WriteLine(singleDepartment);
+                System.Console.WriteLine(newDepartment.Employees);
 
                 context.Add(newDepartment);
+                if (singleDepartment.Employees != null)
+                {
+                    Console.WriteLine("number 1");
+                }
+
+                if (singleDepartment.NewDepartment.Employees != null)
+                {
+                    Console.WriteLine("number 2");
+                }
 
                 if (newDepartment.Employees != null)
                 {
+               System.Console.WriteLine("number 3");
+
                     foreach (Employee employee in newDepartment.Employees)
                     {
-                        //DO SOMETHING
-                        employee.DepartmentId = newDepartment.DepartmentId;
-                        context.Update(employee);
+                        Employee employeeToChange = await context.Employee.SingleAsync(e => e.EmployeeId == employee.EmployeeId);
+                        System.Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                        employeeToChange.DepartmentId = newDepartment.DepartmentId;
+                        context.Update(employeeToChange);
                     }
 
                 }

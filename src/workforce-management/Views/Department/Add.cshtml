@@ -28,7 +28,8 @@
             <label asp-for="NewDepartment.Employees" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <dl class="dropdown">
-                    @Html.DropDownListFor(m => m.NewDepartment, Model.Employees, new { multiple = "true" })
+                    @Html.DropDownList("NewDepartment.Employees", @Model.Employees, "Select a Category", new { multiple = "true" })
+
                 </dl>            
             </div>
         </div>
