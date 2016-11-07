@@ -1,3 +1,4 @@
+using Bangazon.Models;
 using BangazonWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -45,6 +46,30 @@ namespace workforce_management.Controllers
         {
             var model = new DepartmentIndex();
             model.DepartmentList = from department in context.Department select department; 
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Detail(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+            var model = new DepartmentDetail();
+            model.Department = context.Department.Single(p => p.DepartmentId == id);
+            model.Employees = context.Employee.Where(e => e.DepartmentId == id).OrderBy(e => e.FirstName).ToList();
+
+
+            if (model.Employees.Count > 0)
+            {
+                foreach (Employee employee in model.Employees)
+                {
+                    employee.Computer = context.Computer.Single(e => e.ComputerId == employee.ComputerId);
+                }
+            }
 
             return View(model);
         }

@@ -1,0 +1,29 @@
+﻿@model workforce_management.ViewModels.DepartmentDetail
+@using Bangazon.Models;
+
+<h2>@Html.DisplayFor(model => model.Department.Name)</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th>Computer Assigned</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(@Model.Employees != null)
+        {
+            @foreach (Employee employee in @Model.Employees)
+            {
+                <tr>
+                    <td><a asp-controller="Employee" asp-action="Detail" asp-route-id="@employee.EmployeeId">@Html.DisplayFor(model => employee.FirstName) @Html.DisplayFor(model => employee.LastName)</a></td>
+                    <td>@Html.DisplayFor(model => employee.Computer.Make) / @Html.DisplayFor(model => employee.Computer.Model)</td>
+                </tr>
+            }
+        }
+        else
+        { 
+            <tr>The @Html.DisplayFor(model => model.Department.Name) department currently contains no employees.</tr>
+        }
+    </tbody>
+</table>
