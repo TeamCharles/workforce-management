@@ -1,4 +1,4 @@
-﻿using BangazonWeb.Data;
+using BangazonWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using workforce_management.ViewModels;
