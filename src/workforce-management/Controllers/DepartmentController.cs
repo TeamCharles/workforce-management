@@ -14,25 +14,57 @@ using System.Diagnostics;
 
 namespace workforce_management.Controllers
 {
+    /**
+     * Class: DepartmentController
+     * Purpose: Route all department views
+     * Author: Dayne Wright
+     * Methods:
+     *     constructor DepartmentController() - returns instance of DepartmentController
+     *     view Index() - Queries for departments and returns model to razor view
+     */
+
     public class DepartmentController : Controller
     {
         private BangazonContext context;
 
-        //Currently this controller attaches the database context to the employee controller
+        /**
+         * Purpose: Creates instance of DepartmentController
+         * Arguments:
+         *     ctx - database context based to contructor 
+         * Return:
+         *     instance with database context
+         */
+
         public DepartmentController(BangazonContext ctx)
         {
             context = ctx;
         }
-        //This method provides the index view of the Employee controller. This diplays the employee list
 
-
-       /**
-         * Purpose: Provides the Add view
+        /**
+         * Purpose: Routes http get to index
          * Arguments:
-         *    N/A
+         *     none
          * Return:
-         *     Redirect to the Department Index if the model is valid, will redirect the user back to the form if it is invalid. 
-         **/
+         *     view for razor template to index route
+         */
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var model = new DepartmentIndex();
+            model.DepartmentList = from department in context.Department select department;
+
+            return View(model);
+        }
+
+
+        /**
+          * Purpose: Provides the Add view
+          * Arguments:
+          *    N/A
+          * Return:
+          *     Redirect to the Department Index if the model is valid, will redirect the user back to the form if it is invalid. 
+          **/
         [HttpGet]
         public IActionResult Add()
         {
