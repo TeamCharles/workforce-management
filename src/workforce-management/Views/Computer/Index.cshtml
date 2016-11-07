@@ -2,6 +2,7 @@
 @using Bangazon.Models;
 
 <h2>Computers</h2>
+<<<<<<< HEAD
 
 <a asp-controller="Computer" asp-action="Add"><input type="button" class="btn btn-primary" value="Add a new Computer" /></a>
 
@@ -18,6 +19,9 @@
         <span style="margin-right:5px" class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>@ViewBag.ComputerDeleteSuccess
     </div>
 }
+=======
+<a asp-controller="Computer" asp-action="Add"><input type="submit" value="Add a new Computer" class="btn btn-primary" /></a>
+>>>>>>> master
 
 <table class="table">
     <thead>
@@ -48,8 +52,11 @@
                         @("Unassigned");
                     }
                 </td>
+
                 <td><a asp-controller="Computer" asp-action="Delete" asp-route-id="@computer.ComputerId"><span style="color:firebrick" class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
             </tr>
         }
     </tbody>
 </table>
+
+<a asp-controller="Computer" asp-action="Add"><input type="submit" value="Add a new Computer" class="btn btn-primary" /></a>
