@@ -13,7 +13,7 @@
         <div class="form-group">
             <label asp-for="NewComputer.SerialNumber" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="NewComputer.SerialNumber" class="form-control" />
+                <input asp-for="NewComputer.SerialNumber" class="form-control computerAddSerialNumber" />
                 <span asp-validation-for="NewComputer.SerialNumber" class="text-danger"></span>
             </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="form-group">
             <label asp-for="NewComputer.Make" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="NewComputer.Make" class="form-control" />
+                <input asp-for="NewComputer.Make" class="form-control computerAddMake"/>
                 <span asp-validation-for="NewComputer.Make" class="text-danger"></span>
             </div>
         </div>
@@ -29,14 +29,14 @@
         <div class="form-group">
             <label asp-for="NewComputer.Model" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="NewComputer.Model" class="form-control" />
+                <input asp-for="NewComputer.Model" class="form-control computerAddModel" />
                 <span asp-validation-for="NewComputer.Model" class="text-danger"></span>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Add New Computer" class="btn btn-default" />
+                <input type="submit" value="Add New Computer" class="btn btn-default" id="computerAddBtn" disabled="true"/>
             </div>
         </div>
     </div>
