@@ -1,19 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BangazonWeb.Data;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+using System.Linq;
+using workforce_management.ViewModels;
 
 namespace workforce_management.Controllers
 {
+
+    /**
+     * Class: DepartmentController
+     * Purpose: Route all department views
+     * Author: Dayne Wright
+     * Methods:
+     *     constructor DepartmentController() - returns instance of DepartmentController
+     *     view Index() - Queries for departments and returns model to razor view
+     */
+
     public class DepartmentController : Controller
     {
-        // GET: /<controller>/
+        private BangazonContext context;
+
+        /**
+         * Purpose: Creates instance of DepartmentController
+         * Arguments:
+         *     ctx - database context based to contructor 
+         * Return:
+         *     instance with database context
+         */
+
+        public DepartmentController(BangazonContext ctx)
+        {
+            context = ctx;
+        }
+
+        /**
+         * Purpose: Routes http get to index
+         * Arguments:
+         *     none
+         * Return:
+         *     view for razor template to index route
+         */
+
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var model = new DepartmentIndex();
+            model.DepartmentList = from department in context.Department select department; 
+
+            return View(model);
         }
     }
 }

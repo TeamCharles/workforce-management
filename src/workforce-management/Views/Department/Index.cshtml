@@ -1,5 +1,22 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+@model workforce_management.ViewModels.DepartmentIndex
+@using Bangazon.Models;
+
+<h2>Departments</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Descriptions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Department department in Model.DepartmentList)
+        {
+            <tr>
+                <td><a asp-controller="Department" asp-action="Detail" asp-route-id="@department.DepartmentId">@Html.DisplayFor(model => department.Name)</a></td>
+                <td>@Html.DisplayFor(model => department.Description)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
