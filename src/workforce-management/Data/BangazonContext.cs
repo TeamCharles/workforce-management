@@ -39,9 +39,5 @@ namespace BangazonWeb.Data
                 .HasDefaultValueSql("strftime('%Y-%m-%d %H:%M:%S')");
         }
 
-        internal void Add(object newDepartment)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
