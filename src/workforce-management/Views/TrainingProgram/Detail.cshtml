@@ -1,0 +1,29 @@
+﻿@model workforce_management.ViewModels.TrainingProgramDetail
+@using Bangazon.Models;
+
+<h2>@Html.DisplayFor(model => model.TrainingProgram.Name)</h2>
+<a asp-action="Edit" asp-route-id="@Model.TrainingProgram.TrainingProgramId">Edit Program</a>
+
+<div class="row">
+    <div class="col-md-3">
+        <h5>Description:</h5>
+        <p>@Html.DisplayFor(model => model.TrainingProgram.Description)</p>
+    </div>
+    <div class="col-md-3">
+        <h5>Date Created:</h5>
+        <p>@Html.DisplayFor(model => model.TrainingProgram.DateCreated)</p>
+    </div>
+</div>
+
+@foreach (Employee attendee in Model.Attendees)
+{
+    <div class="row">
+        <div class="col-md-10">
+            <div style="display:inline-block">
+                <div><strong>@Html.DisplayFor(modelItem => attendee.FirstName) @Html.DisplayFor(modelItem => attendee.LastName)</strong></div>
+                <div>@Html.DisplayFor(modelItem => attendee.Department.Name)</div>
+            </div>
+
+        </div>
+    </div>
+}
