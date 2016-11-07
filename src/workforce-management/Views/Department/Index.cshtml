@@ -1,7 +1,10 @@
 @model workforce_management.ViewModels.DepartmentIndex
 @using Bangazon.Models;
 
+
 <h2>Departments</h2>
+<a asp-controller="Department" asp-action="Add"><input type="submit" value="Add a Department" class="btn btn-primary" /></a>
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -19,4 +22,7 @@
         }
     </tbody>
 </table>
+
+<a asp-controller="Department" asp-action="Add"><input type="submit" value="Add a Department" class="btn btn-primary" /></a>
+
 
