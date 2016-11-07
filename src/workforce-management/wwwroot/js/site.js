@@ -15,15 +15,9 @@
         }
     }
 
-    $("#departmentBtn").prop("disabled", true);
+    $(".departmentName").on("change",entryCheck);
 
-    $(".departmentName").on("change",function () {
-        entryCheck();
-    });
-
-    $(".departmentDescription").on("change", function () {
-        entryCheck();
-    });
+    $(".departmentDescription").on("change", entryCheck);
 
 });
 

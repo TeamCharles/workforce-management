@@ -18,5 +18,7 @@ namespace workforce_management.ViewModels
 
         public Department NewDepartment { get; set; }
 
+        public int[] EmployeeIds { get; set; }
+
     }
 }

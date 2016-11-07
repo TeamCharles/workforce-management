@@ -81,7 +81,7 @@ namespace workforce_management.Controllers
         }
 
         /**
-         * Purpose: Provides the Add view
+         * Purpose: Provides the Add view and updates the database
          * Arguments:
          *    This method takes a newdepartment as a paramenter, the new department is the one you would like to post into the database.
          * Return:
@@ -94,44 +94,28 @@ namespace workforce_management.Controllers
             if (ModelState.IsValid)
             {
                 Department newDepartment = singleDepartment.NewDepartment;
-                System.Console.WriteLine(newDepartment);
-                System.Console.WriteLine(singleDepartment);
-                System.Console.WriteLine(newDepartment.Employees);
-
                 context.Add(newDepartment);
-                if (singleDepartment.Employees != null)
-                {
-                    Console.WriteLine("number 1");
-                }
+                await context.SaveChangesAsync();
 
-                if (singleDepartment.NewDepartment.Employees != null)
+                if (singleDepartment.EmployeeIds.Count() > 0)
                 {
-                    Console.WriteLine("number 2");
-                }
-
-                if (newDepartment.Employees != null)
-                {
-               System.Console.WriteLine("number 3");
-
-                    foreach (Employee employee in newDepartment.Employees)
+                    foreach (int employee in singleDepartment.EmployeeIds)
                     {
-                        Employee employeeToChange = await context.Employee.SingleAsync(e => e.EmployeeId == employee.EmployeeId);
-                        System.Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                        Employee employeeToChange = await context.Employee.SingleAsync(e => e.EmployeeId == employee);
                         employeeToChange.DepartmentId = newDepartment.DepartmentId;
-                        context.Update(employeeToChange);
+                        context.Employee.Update(employeeToChange);
                     }
-
                 }
+
+
                 await context.SaveChangesAsync();
                 return RedirectToAction("Index");
-
             }
 
 
             var model = new SingleDepartment();
 
-            return RedirectToAction("Index", new RouteValueDictionary(
-                new { controller = "Department", action = "Index" }));
+            return RedirectToAction("Index");
         }
 
     }
