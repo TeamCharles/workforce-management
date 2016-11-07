@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using BangazonWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using Bangazon.Models;
 using workforce_management.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Diagnostics;
 
 namespace workforce_management.Controllers
 {

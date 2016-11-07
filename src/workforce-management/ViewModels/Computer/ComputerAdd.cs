@@ -9,12 +9,11 @@ namespace workforce_management.ViewModels
 
     /**
      * Class: ComputerAdd
-     * Purpose: Stores new computer and a reference to the employee id assigned a new computer (if created)
+     * Purpose: Stores new computer
      * Author: Matt Hamil
      */
     public class ComputerAdd
     {
         public Computer NewComputer { get; set; }
-        public int? AssignedEmployeeId { get; set; }
     }
 }
