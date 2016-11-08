@@ -10,12 +10,13 @@ using BangazonWeb.Data;
 namespace workforce_management.ViewModels
 {
     /**
-     * Class: EmployeeList
-     * Purpose: ViewModel for the EmployeeList
+     * Class: DepartmentList
+     * Purpose: ViewModel for the DepartmentList
      * Author: Garrett Vangilder
      */
-    public class EmployeeList
+    public class DepartmentList
     {
-        public IEnumerable<Employee> Employees { get; set; }
+        public IEnumerable<Department> Departments { get; set; }
+
     }
 }

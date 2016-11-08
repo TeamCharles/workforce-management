@@ -29,7 +29,8 @@
     },
     "Microsoft.AspNetCore.Mvc.Core": "1.0.1",
     "Microsoft.ApplicationInsights": "2.1.0",
-    "Microsoft.AspNetCore.Session": "1.0.0"
+    "Microsoft.AspNetCore.Session": "1.0.0",
+    "jQuery.UI.Combined": "1.12.1"
   },
 
   "tools": {
