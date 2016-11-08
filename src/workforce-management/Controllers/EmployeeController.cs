@@ -127,7 +127,8 @@ namespace workforce_management.Controllers
         public async Task<IActionResult> Edit([FromRoute]int id)
         {
             var model = new EmployeeForm(context);
-            model.Employee = await context.Employee.SingleOrDefaultAsync(e => e.EmployeeId == id);
+
+            model.Employee = await context.Employee.SingleAsync(e => e.EmployeeId == id);
             if (model.Employee == null)
             {
                 return NotFound();

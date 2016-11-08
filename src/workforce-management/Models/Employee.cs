@@ -43,7 +43,7 @@ namespace Bangazon.Models
 
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         // Foreign Key Dependencies
         public ICollection<Attendee> Attendees;
