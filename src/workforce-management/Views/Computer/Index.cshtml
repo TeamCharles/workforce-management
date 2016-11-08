@@ -2,7 +2,22 @@
 @using Bangazon.Models;
 
 <h2>Computers</h2>
-<a asp-controller="Computer" asp-action="Add"><input type="submit" value="Add a new Computer" class="btn btn-primary" /></a>
+
+<a asp-controller="Computer" asp-action="Add"><input type="button" class="btn btn-primary" value="Add a new Computer" /></a>
+
+@if (ViewBag.ComputerDeleteError != null)
+{
+<div style="margin-top:15px" class="alert alert-danger" role="alert">
+    <span style="margin-right:5px" class="glyphicon glyphicon-alert" aria-hidden="true"></span>@ViewBag.ComputerDeleteError
+</div>
+}
+
+@if (ViewBag.ComputerDeleteSuccess != null)
+{
+    <div style="margin-top:15px" class="alert alert-success" role="alert">
+        <span style="margin-right:5px" class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>@ViewBag.ComputerDeleteSuccess
+    </div>
+}
 
 <table class="table">
     <thead>
@@ -24,9 +39,17 @@
                 <td>@computer.Make.ToString()</td>
                 <td>@computer.Model.ToString()</td>
                 <td>
-                    @(employee != null ? employee.FirstName + " " + employee.LastName : "Unassigned")
+                    @if (employee != null)
+                    {
+                        <a asp-controller="Employee" asp-action="Detail" asp-route-id="@employee.EmployeeId">@employee.FirstName @employee.LastName</a>
+                    }
+                    else
+                    {
+                        @("Unassigned");
+                    }
                 </td>
-                <td><span style="color:firebrick" class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+
+                <td><a asp-controller="Computer" asp-action="Delete" asp-route-id="@computer.ComputerId"><span style="color:firebrick" class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
             </tr>
         }
     </tbody>

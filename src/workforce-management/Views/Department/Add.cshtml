@@ -1,0 +1,40 @@
+﻿@model workforce_management.ViewModels.SingleDepartment
+@using Bangazon.Models;
+@{
+    ViewData["Title"] = "Add a Department";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-controller="Department" asp-action="Add">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="NewDepartment.Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NewDepartment.Name" class="form-control departmentName" placeholder="Department Name" />
+                <span asp-validation-for="NewDepartment.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="NewDepartment.Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NewDepartment.Description" class="form-control departmentDescription" placeholder="Department Description" />
+                <span asp-validation-for="NewDepartment.Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="NewDepartment.Employees" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <dl class="dropdown">
+                    @Html.DropDownList("EmployeeIds", @Model.Employees, "Select a Category", new { multiple = "true" })
+
+                </dl>            
+            </div>
+        </div>
+            <input type="submit" disabled value="Add New Department" class="btn btn-default" id="departmentBtn" />
+    </div>
+</form>
+
+
