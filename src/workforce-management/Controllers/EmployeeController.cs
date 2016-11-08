@@ -76,7 +76,6 @@ namespace workforce_management.Controllers
         public IActionResult Add()
         {
             var model = new EmployeeForm(context);
-            model.TrainingPrograms = context.TrainingProgram.AsEnumerable().Select(li => new SelectListItem { Value = li.TrainingProgramId.ToString(), Text = li.Name });
             return View(model);
         }
 
@@ -108,7 +107,6 @@ namespace workforce_management.Controllers
             var model = new EmployeeForm(context);
             model.Employee = form.Employee;
             model.EnrolledTraining = form.EnrolledTraining;
-            model.TrainingPrograms = context.TrainingProgram.AsEnumerable().Select(li => new SelectListItem { Value = li.TrainingProgramId.ToString(), Text = li.Name, Selected = model.EnrolledTraining.Contains(li.TrainingProgramId) });
             return View(model);
         }
 
@@ -119,8 +117,50 @@ namespace workforce_management.Controllers
             model.Employee = await context.Employee.SingleAsync(e => e.EmployeeId == id);
             model.Employee.Computer = await context.Computer.SingleAsync(c => c.ComputerId == model.Employee.ComputerId);
             model.EnrolledTraining = await context.Attendee.Where(a => a.EmployeeId == model.Employee.EmployeeId).Select(a => a.ProgramId).ToArrayAsync();
-            model.TrainingPrograms = context.TrainingProgram.AsEnumerable().Select(li => new SelectListItem { Value = li.TrainingProgramId.ToString(), Text = li.Name, Selected = true });
+            return View(model);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EmployeeForm form)
+        {
+            if (ModelState.IsValid)
+            {
+                Employee originalEmployee = await context.Employee.SingleAsync(e => e.EmployeeId == form.Employee.EmployeeId);
+                if (form.NewComputerId != null)
+                {
+                    originalEmployee.ComputerId = (int)form.NewComputerId;
+                }
+                originalEmployee.DepartmentId = form.Employee.DepartmentId;
+                originalEmployee.FirstName = form.Employee.FirstName;
+                originalEmployee.LastName = form.Employee.LastName;
+                originalEmployee.StartDate = form.Employee.StartDate;
+                originalEmployee.EndDate = form.Employee.EndDate;
+                context.Employee.Update(originalEmployee);
+
+                // Request all Training Programs
+                List<TrainingProgram> programs = context.TrainingProgram.ToList();
+                foreach (TrainingProgram program in programs)
+                {
+                    // Try to find an Attendee record that matches the EmployeeId and current ProgramId (from loop)
+                    Attendee attendee = await context.Attendee.Where(a => a.EmployeeId == form.Employee.EmployeeId).SingleOrDefaultAsync(a => a.ProgramId == program.TrainingProgramId);
+                    if (attendee == null && form.EnrolledTraining.Contains(program.TrainingProgramId))
+                    {
+                        // If a program was selected but no attendee record exists, add one
+                        context.Attendee.Add(new Bangazon.Models.Attendee { EmployeeId = form.Employee.EmployeeId, ProgramId = program.TrainingProgramId });
+                    } else if (attendee != null && !form.EnrolledTraining.Contains(program.TrainingProgramId))
+                    {
+                        // If a program was not selected, but an attendee record exists, remove it
+                        context.Attendee.Remove(attendee);
+                    }
+                }
+
+                await context.SaveChangesAsync();
+                return RedirectToAction("Detail", new { id = originalEmployee.EmployeeId });
+            }
+            var model = new EmployeeForm(context);
+            model.Employee = form.Employee;
+            model.EnrolledTraining = form.EnrolledTraining;
             return View(model);
         }
     }
