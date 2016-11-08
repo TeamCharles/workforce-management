@@ -58,9 +58,16 @@ namespace workforce_management.Controllers
               * Return:
               *     At this point the function will redirect the user to the detail view through the return statement.
               */
-        public IActionResult Detail()
+         [HttpGet]
+        public async Task<IActionResult> Detail([FromRoute]int id)
         {
-            return View();
+            var model = new EmployeeDetail(context);
+            model.Employee = await context.Employee.SingleOrDefaultAsync(e => e.EmployeeId == id);
+            if (model.Employee == null)
+            {
+                return NotFound();
+            }
+            return View(model);
         }
 
 

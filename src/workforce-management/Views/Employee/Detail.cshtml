@@ -1,1 +1,19 @@
-﻿<h4>HELLO!</h4>
+﻿@model workforce_management.ViewModels.EmployeeDetail
+@using Bangazon.Models;
+
+<h2>@Html.DisplayFor(model => model.Employee.FirstName) @Html.DisplayFor(model => model.Employee.LastName)</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th>Computer Assigned</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
