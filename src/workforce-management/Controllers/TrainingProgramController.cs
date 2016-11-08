@@ -15,7 +15,7 @@ namespace workforce_management.Controllers
         /**
          * CLASS: ProductTypes
          * PURPOSE: Creates routes for main index view (buy method) and seller view (sell method)
-         * AUTHOR: Matt Kraatz
+         * AUTHOR: Matt Kraatz/Dayne Wright
          * METHODS:
          *   TrainingProgramController(BangazonContext) - Constructor that saves the database context to a private variable.
          *   IActionResult Index() - Returns a View listing all Training Programs.
@@ -70,6 +70,13 @@ namespace workforce_management.Controllers
             return View(model);
         }
 
+        /**
+         * Purpose: Populate edit form with passed in training program id
+         * Arguments:
+         *     id - The id for the training program to edit
+         * Return:
+         *     Returns a view model for the training program to edit
+         */
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -88,6 +95,13 @@ namespace workforce_management.Controllers
             return View(model);
         }
 
+        /**
+         * Purpose: Submits edited training program and updates database
+         * Arguments:
+         *     editedProgram - The edited training program details
+         * Return:
+         *     Detailed view for passed in training program
+         */
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(TrainingProgramEdit editedProgram)
