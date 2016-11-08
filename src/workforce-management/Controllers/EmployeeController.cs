@@ -17,9 +17,14 @@ namespace workforce_management.Controllers
     /**
          * CLASS: EmployeeController
          * PURPOSE: Creates routes for main index view 
-         * AUTHOR: Garrett Vangilder
+         * AUTHOR: Garrett Vangilder/Matt Kraatz
          * METHODS:
          *   Index() - View list of employees
+         *   Detail() - View details for a single employee
+         *   Add() - View form for adding a new employee
+         *   Add(EmployeeForm) - Process form input for adding a new employee
+         *   Edit(int) - View form for editing an existing employee
+         *   Edit(EmployeeForm) - Process form input for editing an existing employee
          **/
     public class EmployeeController : Controller
     {
@@ -110,6 +115,14 @@ namespace workforce_management.Controllers
             return View(model);
         }
 
+
+        /**
+         * Purpose: Retrieve an Employee record and provide a form view for the user to update
+         * Arguments:
+         *     id - EmployeeId for the Employee record being edited
+         * Return:
+         *     View with Employee Form prepopulated with existing Employee properties
+         */
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute]int id)
         {
@@ -120,6 +133,15 @@ namespace workforce_management.Controllers
             return View(model);
         }
 
+
+        /**
+         * Purpose: Process form input to update an existing Employee and any necessary Attendee records
+         * Arguments:
+         *     form - User input from form
+         * Return:
+         *     If model is valid, return Detail view for that Employee record
+         *     If model is invalid, return Form view to continue editing the Employee record
+         */
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EmployeeForm form)
