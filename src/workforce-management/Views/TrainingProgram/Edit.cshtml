@@ -30,6 +30,11 @@
                 @Html.ListBoxFor(m => m.selectedAttendees, new MultiSelectList(Model.Employees, "EmployeeId", "FirstName", null), new { @class = "form-control" })
             </div>
         </div>
+        @foreach(int attendee in @Model.selectedAttendees)
+        {
+            <p>@attendee</p>
+
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
