@@ -145,6 +145,20 @@ namespace workforce_management.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public async Task<IActionResult> Edit([FromRoute]int id)
+        {
+            var model = new SingleDepartment();
+            model.EditDepartment = await context.Department.SingleAsync(d => d.DepartmentId == id);
 
-    }
+
+            if (model.EditDepartment != null)
+            {
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        }
 }

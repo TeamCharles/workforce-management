@@ -10,6 +10,7 @@
         <tr>
             <th>Name</th>
             <th>Descriptions</th>
+            <th>Edit or Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,7 @@
             <tr>
                 <td><a asp-controller="Department" asp-action="Detail" asp-route-id="@department.DepartmentId">@Html.DisplayFor(model => department.Name)</a></td>
                 <td>@Html.DisplayFor(model => department.Description)</td>
+                <td><a asp-action="Edit" asp-route-id="@department.DepartmentId"><input type="button" value="Edit" class="btn btn-primary"></a></td> 
             </tr>
         }
     </tbody>

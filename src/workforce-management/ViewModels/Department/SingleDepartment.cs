@@ -18,6 +18,8 @@ namespace workforce_management.ViewModels
 
         public Department NewDepartment { get; set; }
 
+        public Department EditDepartment { get; set; }
+
         public int[] EmployeeIds { get; set; }
 
     }
