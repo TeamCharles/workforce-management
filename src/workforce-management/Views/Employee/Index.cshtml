@@ -1,0 +1,25 @@
+﻿@model workforce_management.ViewModels.EmployeeList
+@using Bangazon.Models;
+
+<h2>Employees</h2>
+<a asp-controller="Employee" asp-action="Add"><input type="submit" value="Add an Employee" class="btn btn-primary" /></a>
+
+<table class="table table-striped">
+    <thead>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Details</th>
+    </thead>
+    <tbody>
+        @foreach (Employee employee in @Model.Employees)
+            { 
+                <tr>
+                    <td >@Html.DisplayFor(model => employee.FirstName)</td>
+                    <td>@Html.DisplayFor(model => employee.Department.Name)</td>
+                    <td><a class="btn btn-primary btn-xs" asp-controller="Employee" asp-action="Detail" asp-route-id="@employee.EmployeeId">Details</a></td>
+                </tr>
+            }
+    </tbody>
+</table>
+
+<a asp-controller="Employee" asp-action="Add"><input type="submit" value="Add an Employee" class="btn btn-primary" /></a>

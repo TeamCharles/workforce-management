@@ -1,0 +1,27 @@
+﻿@model workforce_management.ViewModels.TrainingProgramIndex
+@using Bangazon.Models;
+
+<h2>Training Programs</h2>
+<a asp-controller="TrainingProgram" asp-action="Add"><input type="submit" value="Add a Training Program" class="btn btn-primary" /></a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Descriptions</th>
+            <th>Attendees</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (TrainingProgram program in @Model.TrainingPrograms)
+        {
+            <tr>
+                <td><a asp-controller="TrainingProgram" asp-action="Detail" asp-route-id="@program.TrainingProgramId">@Html.DisplayFor(model => program.Name)</a></td>
+                <td>@Html.DisplayFor(model => program.Description)</td>
+                <td>@Html.DisplayFor(model => model.AttendeeCount[program.TrainingProgramId])</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="TrainingProgram" asp-action="Add"><input type="submit" value="Add a Training Program" class="btn btn-primary" /></a>
