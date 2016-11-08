@@ -127,7 +127,11 @@ namespace workforce_management.Controllers
         public async Task<IActionResult> Edit([FromRoute]int id)
         {
             var model = new EmployeeForm(context);
-            model.Employee = await context.Employee.SingleAsync(e => e.EmployeeId == id);
+            model.Employee = await context.Employee.SingleOrDefaultAsync(e => e.EmployeeId == id);
+            if (model.Employee == null)
+            {
+                return NotFound();
+            }
             model.Employee.Computer = await context.Computer.SingleAsync(c => c.ComputerId == model.Employee.ComputerId);
             model.EnrolledTraining = await context.Attendee.Where(a => a.EmployeeId == model.Employee.EmployeeId).Select(a => a.ProgramId).ToArrayAsync();
             return View(model);
@@ -148,7 +152,11 @@ namespace workforce_management.Controllers
         {
             if (ModelState.IsValid)
             {
-                Employee originalEmployee = await context.Employee.SingleAsync(e => e.EmployeeId == form.Employee.EmployeeId);
+                Employee originalEmployee = await context.Employee.SingleOrDefaultAsync(e => e.EmployeeId == form.Employee.EmployeeId);
+                if (originalEmployee == null)
+                {
+                    return NotFound();
+                }
                 if (form.NewComputerId != null)
                 {
                     originalEmployee.ComputerId = (int)form.NewComputerId;
