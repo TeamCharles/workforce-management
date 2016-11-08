@@ -14,5 +14,6 @@ namespace workforce_management.ViewModels
         public TrainingProgram TrainingProgram { get; set; }
         public int[] selectedAttendees { get; set; }
         public List<Employee> Employees { get; set; }
+        public Dictionary<int, string> EmployeesFullName { get; set; } = new Dictionary<int, string>();
     }
 }

@@ -76,6 +76,13 @@ namespace workforce_management.Controllers
             var model = new TrainingProgramEdit();
             model.TrainingProgram = context.TrainingProgram.Single(p => p.TrainingProgramId == id);
             model.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+
+            foreach(Employee employee in model.Employees)
+            {
+                string fullName = employee.FirstName + " " + employee.LastName;
+                model.EmployeesFullName.Add(employee.EmployeeId, fullName);
+            }
+
             model.selectedAttendees = context.Attendee.Where(e => e.ProgramId == model.TrainingProgram.TrainingProgramId).Select(e => e.EmployeeId).ToArray();
 
             return View(model);
