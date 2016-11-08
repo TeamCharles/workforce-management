@@ -62,5 +62,50 @@ namespace workforce_management.Controllers
         {
             return View();
         }
+
+
+        /**
+         * Purpose: Provide form view for users to add new employees
+         * Arguments:
+         *     Void
+         * Return:
+         *     Blank form view
+         */
+         [HttpGet]
+        public IActionResult Add()
+        {
+            var model = new EmployeeForm(context);
+            return View(model);
+        }
+
+        /**
+         * Purpose: Validates Employee Form input and adds a new Employee record and Attendee records to the database
+         * Arguments:
+         *     form - complete viewmodel from Employee/Add form
+         * Return:
+         *     If model is valid, redirects user to Employee/Detail view for the newly created Employee
+         *     If model is invalid, returns user to Employee/Add form with validation messages
+         */
+         [HttpPost]
+         [ValidateAntiForgeryToken]
+        public IActionResult Add(EmployeeForm form)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Employee.Add(form.Employee);
+                if (form.EnrolledTraining.Count() > 0)
+                {
+                    foreach (int program in form.EnrolledTraining)
+                    {
+                        context.Attendee.Add(new Bangazon.Models.Attendee { EmployeeId = form.Employee.EmployeeId, ProgramId = program });
+                    }
+                }
+                context.SaveChanges();
+                return RedirectToAction("Detail", new { id = form.Employee.EmployeeId });
+            }
+            var model = new EmployeeForm(context);
+            model.Employee = form.Employee;
+            return View(model);
+        }
     }
 }
