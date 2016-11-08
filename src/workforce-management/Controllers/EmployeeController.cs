@@ -8,6 +8,7 @@ using Bangazon.Models;
 using workforce_management.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -75,6 +76,7 @@ namespace workforce_management.Controllers
         public IActionResult Add()
         {
             var model = new EmployeeForm(context);
+            model.TrainingPrograms = context.TrainingProgram.AsEnumerable().Select(li => new SelectListItem { Value = li.TrainingProgramId.ToString(), Text = li.Name });
             return View(model);
         }
 
@@ -105,6 +107,20 @@ namespace workforce_management.Controllers
             }
             var model = new EmployeeForm(context);
             model.Employee = form.Employee;
+            model.EnrolledTraining = form.EnrolledTraining;
+            model.TrainingPrograms = context.TrainingProgram.AsEnumerable().Select(li => new SelectListItem { Value = li.TrainingProgramId.ToString(), Text = li.Name, Selected = model.EnrolledTraining.Contains(li.TrainingProgramId) });
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit([FromRoute]int id)
+        {
+            var model = new EmployeeForm(context);
+            model.Employee = await context.Employee.SingleAsync(e => e.EmployeeId == id);
+            model.Employee.Computer = await context.Computer.SingleAsync(c => c.ComputerId == model.Employee.ComputerId);
+            model.EnrolledTraining = await context.Attendee.Where(a => a.EmployeeId == model.Employee.EmployeeId).Select(a => a.ProgramId).ToArrayAsync();
+            model.TrainingPrograms = context.TrainingProgram.AsEnumerable().Select(li => new SelectListItem { Value = li.TrainingProgramId.ToString(), Text = li.Name, Selected = true });
+
             return View(model);
         }
     }
