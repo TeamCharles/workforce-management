@@ -20,7 +20,7 @@ namespace workforce_management.ViewModels
     public class EmployeeDetail
     {
         public Employee Employee { get; set; }
-
+        public List<TrainingProgram> TrainingPrograms { get; set; }
         public EmployeeDetail(BangazonContext ctx) { }
         public EmployeeDetail() { }
     }

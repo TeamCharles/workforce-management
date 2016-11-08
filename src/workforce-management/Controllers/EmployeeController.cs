@@ -62,7 +62,14 @@ namespace workforce_management.Controllers
         public async Task<IActionResult> Detail([FromRoute]int id)
         {
             var model = new EmployeeDetail(context);
-            model.Employee = await context.Employee.SingleOrDefaultAsync(e => e.EmployeeId == id);
+            model.Employee = await context.Employee.Include(e => e.Computer).Include(e => e.Department).SingleOrDefaultAsync(e => e.EmployeeId == id);
+
+            model.TrainingPrograms = await (
+                from program in context.TrainingProgram
+                from attendee in context.Attendee
+                where attendee.EmployeeId == model.Employee.EmployeeId && program.TrainingProgramId == attendee.ProgramId
+                select program).ToListAsync();
+
             if (model.Employee == null)
             {
                 return NotFound();
