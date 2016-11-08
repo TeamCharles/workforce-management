@@ -11,6 +11,7 @@
             <th>Make</th>
             <th>Model</th>
             <th>Employee</th>
+            <th>@* Empty cell where the edit button will go in each row *@</th>
             <th>@* Empty cell where the delete button will go in each row *@</th>
         </tr>
     </thead>
@@ -26,6 +27,7 @@
                 <td>
                     @(employee != null ? employee.FirstName + " " + employee.LastName : "Unassigned")
                 </td>
+                <td><a asp-action="Edit" asp-route-id="@computer.ComputerId"><input type="button" value="Edit" class="btn btn-primary"></a></td>
                 <td><span style="color:firebrick" class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
             </tr>
         }
