@@ -129,10 +129,6 @@ namespace workforce_management.Controllers
             var model = new EmployeeForm(context);
 
             model.Employee = await context.Employee.SingleAsync(e => e.EmployeeId == id);
-            if (model.Employee == null)
-            {
-                return NotFound();
-            }
             model.Employee.Computer = await context.Computer.SingleAsync(c => c.ComputerId == model.Employee.ComputerId);
             model.EnrolledTraining = await context.Attendee.Where(a => a.EmployeeId == model.Employee.EmployeeId).Select(a => a.ProgramId).ToArrayAsync();
             return View(model);
@@ -175,11 +171,15 @@ namespace workforce_management.Controllers
                 {
                     // Try to find an Attendee record that matches the EmployeeId and current ProgramId (from loop)
                     Attendee attendee = await context.Attendee.Where(a => a.EmployeeId == form.Employee.EmployeeId).SingleOrDefaultAsync(a => a.ProgramId == program.TrainingProgramId);
-                    if (attendee == null && form.EnrolledTraining.Contains(program.TrainingProgramId))
+                    if (attendee == null && form.EnrolledTraining != null && form.EnrolledTraining.Contains(program.TrainingProgramId))
                     {
                         // If a program was selected but no attendee record exists, add one
                         context.Attendee.Add(new Bangazon.Models.Attendee { EmployeeId = form.Employee.EmployeeId, ProgramId = program.TrainingProgramId });
-                    } else if (attendee != null && !form.EnrolledTraining.Contains(program.TrainingProgramId))
+                    } else if (attendee != null && form.EnrolledTraining != null && !form.EnrolledTraining.Contains(program.TrainingProgramId))
+                    {
+                        // If a program was not selected, but an attendee record exists, remove it
+                        context.Attendee.Remove(attendee);
+                    } else if (attendee != null && form.EnrolledTraining == null)
                     {
                         // If a program was not selected, but an attendee record exists, remove it
                         context.Attendee.Remove(attendee);
