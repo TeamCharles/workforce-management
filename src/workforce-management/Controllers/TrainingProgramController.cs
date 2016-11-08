@@ -6,6 +6,8 @@ using BangazonWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using workforce_management.ViewModels;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 
 namespace workforce_management.Controllers
 {
@@ -37,6 +39,56 @@ namespace workforce_management.Controllers
          * Return:
          *      View containing a list of all Training Programs
          */
+
+        private bool TrainingProgramExists(int id)
+        {
+            return context.TrainingProgram.Count(e => e.TrainingProgramId == id) > 0;
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            var model = new TrainingProgramAdd();
+            model.Employees = context.Employee
+                .OrderBy(l => l.LastName)
+                .AsEnumerable()
+                .Select(li => new SelectListItem
+                {
+                    Text = li.LastName,
+                    Value = li.EmployeeId.ToString()
+                });
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(TrainingProgramAdd trainingProgramAdd)
+        {
+            if (ModelState.IsValid)
+            {
+                TrainingProgram newTrainingProgram = trainingProgramAdd.NewTrainingProgram;
+
+                context.Add(newTrainingProgram);
+
+
+                if (trainingProgramAdd.Employees != null)
+                {
+                    foreach (SelectListItem employee in trainingProgramAdd.Employees)
+                    {
+                        Attendee newattendee = new Attendee();
+                        newattendee.EmployeeId = Int32.Parse(employee.Value);
+                        newattendee.ProgramId = newTrainingProgram.TrainingProgramId;
+                        newattendee.TrainingProgram = newTrainingProgram;
+                        context.Add(newattendee);
+                    }
+                }
+
+                //await context.SaveChangesAsync();
+                return RedirectToAction("Detail", new RouteValueDictionary(new { controller = "TrainingProgram", action = "Detail", Id = newTrainingProgram.TrainingProgramId}) );
+            }
+            return RedirectToAction("Index", "TrainingProgram");
+        }
+
         [HttpGet]
         public IActionResult Index()
         {

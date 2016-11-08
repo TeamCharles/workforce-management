@@ -224,15 +224,15 @@ namespace BangazonWeb.Data
                     {
                         new Attendee {
                             EmployeeId = 1,
-                            TrainingProgramId = 1,
+                            ProgramId = 1,
                         },
                         new Attendee {
                             EmployeeId = 2,
-                            TrainingProgramId = 2
+                            ProgramId = 2
                         },
                         new Attendee {
                             EmployeeId = 2,
-                            TrainingProgramId = 3
+                            ProgramId = 3
                         }
                     };
 

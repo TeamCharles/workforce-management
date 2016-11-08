@@ -12,5 +12,7 @@ namespace workforce_management.ViewModels
         public IEnumerable<SelectListItem> Employees { get; set; }
 
         public TrainingProgram NewTrainingProgram { get; set; }
+
+        public IEnumerable<Attendee> Attendee { get; set; }
     }
 }
