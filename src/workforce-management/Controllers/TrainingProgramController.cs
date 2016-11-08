@@ -92,17 +92,39 @@ namespace workforce_management.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(TrainingProgramEdit editedProgram)
         {
-            var originalProgram = context.TrainingProgram.Single(p => p.TrainingProgramId == editedProgram.TrainingProgram.TrainingProgramId);
+            TrainingProgram originalProgram = context.TrainingProgram.Single(p => p.TrainingProgramId == editedProgram.TrainingProgram.TrainingProgramId);
+            Attendee[] attendeeList = context.Attendee.Where(a => a.ProgramId == originalProgram.TrainingProgramId).ToArray();
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-
-              
-                foreach(int attendeeId in editedProgram.selectedAttendees)
+                if (editedProgram.selectedAttendees != null)
                 {
-                    Attendee employeeSelected = context.Attendee.Where(e => e.EmployeeId == attendeeId).FirstOrDefault();
-                    employeeSelected.Employee = context.Employee.Where(e => e.EmployeeId == attendeeId).FirstOrDefault();
-                    originalProgram.Attendees.Add(employeeSelected);
+                    Employee[] employees = context.Employee.Where(e => !editedProgram.selectedAttendees.Contains(e.EmployeeId)).ToArray();
+
+                    foreach(Employee employee in employees)
+                    {
+                        Attendee isListed = attendeeList.SingleOrDefault(a => a.EmployeeId == employee.EmployeeId);
+                        if (isListed != null)
+                        {
+                            context.Attendee.Remove(isListed);
+                        }
+                    }
+
+                    foreach (int attendeeId in editedProgram.selectedAttendees)
+                    {
+                        Attendee employeeSelected = context.Attendee.Where(e => e.EmployeeId == attendeeId).SingleOrDefault(e => e.ProgramId == editedProgram.TrainingProgram.TrainingProgramId);
+                        if (employeeSelected == null)
+                        {
+                            context.Attendee.Add(new Bangazon.Models.Attendee { EmployeeId = attendeeId, ProgramId = originalProgram.TrainingProgramId });
+                        }
+                    }
+                }
+                else
+                {
+                    foreach(Attendee attendee in attendeeList)
+                    {
+                        context.Attendee.Remove(attendee);
+                    }
                 }
 
                 originalProgram.Description = editedProgram.TrainingProgram.Description;
@@ -111,12 +133,10 @@ namespace workforce_management.Controllers
                 context.Update(originalProgram);
                 context.SaveChanges();
 
-                return RedirectToAction("Detail", new RouteValueDictionary(
-                    new { controller = "TrainingProgram", action = "Detail", Id = editedProgram.TrainingProgram.TrainingProgramId }));
+                return RedirectToAction("Detail", new { id = editedProgram.TrainingProgram.TrainingProgramId });
             }
 
             return View(originalProgram);
-
         }
     }
 }
