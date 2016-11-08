@@ -79,11 +79,10 @@ namespace workforce_management.Controllers
                         newattendee.EmployeeId = Int32.Parse(employee.Value);
                         newattendee.ProgramId = newTrainingProgram.TrainingProgramId;
                         newattendee.TrainingProgram = newTrainingProgram;
-                        context.Add(newattendee);
                     }
                 }
 
-                //await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return RedirectToAction("Detail", new RouteValueDictionary(new { controller = "TrainingProgram", action = "Detail", Id = newTrainingProgram.TrainingProgramId}) );
             }
             return RedirectToAction("Index", "TrainingProgram");
