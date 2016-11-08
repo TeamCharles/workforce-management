@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using workforce_management.ViewModels;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
+using System.Threading.Tasks;
+using System;
 
 namespace workforce_management.Controllers
 {
@@ -76,6 +79,37 @@ namespace workforce_management.Controllers
             model.selectedAttendees = context.Attendee.Where(e => e.ProgramId == model.TrainingProgram.TrainingProgramId).Select(e => e.EmployeeId).ToArray();
 
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(TrainingProgramEdit editedProgram)
+        {
+            var originalProgram = context.TrainingProgram.Single(p => p.TrainingProgramId == editedProgram.TrainingProgram.TrainingProgramId);
+
+            if(ModelState.IsValid)
+            {
+
+              
+                foreach(int attendeeId in editedProgram.selectedAttendees)
+                {
+                    Attendee employeeSelected = context.Attendee.Where(e => e.EmployeeId == attendeeId).FirstOrDefault();
+                    employeeSelected.Employee = context.Employee.Where(e => e.EmployeeId == attendeeId).FirstOrDefault();
+                    originalProgram.Attendees.Add(employeeSelected);
+                }
+
+                originalProgram.Description = editedProgram.TrainingProgram.Description;
+                originalProgram.Name = editedProgram.TrainingProgram.Name;
+
+                context.Update(originalProgram);
+                context.SaveChanges();
+
+                return RedirectToAction("Detail", new RouteValueDictionary(
+                    new { controller = "TrainingProgram", action = "Detail", Id = editedProgram.TrainingProgram.TrainingProgramId }));
+            }
+
+            return View(originalProgram);
+
         }
     }
 }
