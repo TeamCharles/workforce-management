@@ -52,7 +52,7 @@
         @foreach (var program in Model.TrainingPrograms)
         {
         <tr>
-            <td>@program.Name</td>
+            <td><a asp-controller="TrainingProgram" asp-route-id="@program.TrainingProgramId">@program.Name</a></td>
             <td>@program.Description</td>
         </tr>
         }
