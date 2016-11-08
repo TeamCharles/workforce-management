@@ -151,6 +151,16 @@ namespace workforce_management.Controllers
             var model = new SingleDepartment();
             model.EditDepartment = await context.Department.SingleAsync(d => d.DepartmentId == id);
 
+            model.Employees = context.Employee
+                .OrderBy(e => e.LastName)
+                .AsEnumerable()
+                .Where(e => e.EndDate == null && e.DepartmentId != id)
+                .Select(li => new SelectListItem
+                {
+                    Text = li.LastName + " " + li.FirstName,
+                    Value = li.EmployeeId.ToString()
+                });
+
 
             if (model.EditDepartment != null)
             {
