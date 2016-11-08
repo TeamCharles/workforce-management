@@ -93,9 +93,9 @@ namespace workforce_management.Controllers
         }
 
         /**
-         * Purpose: Adds a new computer to the database and can update employee if assigned
+         * Purpose: Adds a new computer to the database
          * Arguments:
-         *     computerAdd - ComputerAdd view model containing form data and assigned employee ID
+         *     computerAdd - ComputerAdd view model containing form data
          * Return:
          *     Computer list view
          */
@@ -107,23 +107,10 @@ namespace workforce_management.Controllers
             if (ModelState.IsValid)
             {
                 Computer newComputer = computerAdd.NewComputer;
-                Employee assignedEmployee = await (
-                    from employee in context.Employee
-                    where employee.EmployeeId == computerAdd.AssignedEmployeeId
-                    select employee).SingleOrDefaultAsync();
 
                 // Add the new computer to the database
                 context.Add(newComputer);
                 await context.SaveChangesAsync();
-
-                // If employee assigned to computer, update employee
-                if (assignedEmployee != null)
-                {
-                    // Assign the new computer to the employee
-                    assignedEmployee.ComputerId = newComputer.ComputerId;
-                    context.Update(assignedEmployee);
-                    await context.SaveChangesAsync();
-                }
 
                 // Return to Computer list view
                 return RedirectToAction("Index");
