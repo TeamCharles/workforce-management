@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using workforce_management.ViewModels;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.ApplicationInsights.DataContracts;
 
 namespace workforce_management.Controllers
 {
@@ -20,7 +21,9 @@ namespace workforce_management.Controllers
      *     IActionResult Index() - Computer list view
      *     IActionResult Add() - Computer add view
      *     Task<IActionResult> Add(ComputerAdd computerAdd) - Add new computer to database
+     *     Task<IActionResult> Edit(int computerId) - Load the edit view with the computer to edit
      *     Task<IActionResult> Edit(ComputerEdit computerAdd) - Edit a computer in the database
+     *     Task<IActionResult> Delete(int computerId) - Removes a computer from DB and unassigns its employee
      */
     public class ComputerController : Controller
     {
@@ -48,6 +51,19 @@ namespace workforce_management.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            // Check for redirects from Delete()
+            if (TempData["ComputerDeleteError"] != null)
+            {
+                ViewBag.ComputerDeleteError = TempData["ComputerDeleteError"].ToString();
+                TempData.Remove("ComputerDeleteError");
+            }
+
+            if (TempData["ComputerDeleteSuccess"] != null)
+            {
+                ViewBag.ComputerDeleteSuccess = TempData["ComputerDeleteSuccess"].ToString();
+                TempData.Remove("ComputerDeleteSuccess");
+            }
+
             ComputerIndex viewModel = new ComputerIndex();
 
             // Select all computers that are not assigned to employees
@@ -156,6 +172,11 @@ namespace workforce_management.Controllers
                     where editedComputer.ComputerId == computer.ComputerId
                     select computer).SingleOrDefaultAsync();
 
+                if (computerToEdit == null)
+                {
+                    return NotFound();
+                }
+
                 computerToEdit.SerialNumber = editedComputer.SerialNumber;
                 computerToEdit.Make = editedComputer.Make;
                 computerToEdit.Model = editedComputer.Model;
@@ -165,6 +186,42 @@ namespace workforce_management.Controllers
                 return RedirectToAction("Index");
             }
             return View(computerEdit);
+        }
+
+        /**
+         * Purpose: Deletes a computer from the database
+         * Arguments:
+         *     id - The computer id to delete
+         * Return:
+         *     Computer list view with success or error message
+         */
+
+        [HttpGet]
+        public async Task<IActionResult> Delete([FromRoute]int id)
+        {
+            var computerToDelete = await (
+                from computer in context.Computer
+                where id == computer.ComputerId
+                select computer).SingleOrDefaultAsync();
+
+            var assignedEmployee = await (
+                from employee in context.Employee
+                where employee.ComputerId == id
+                select employee).SingleOrDefaultAsync();
+
+            if (assignedEmployee != null)
+            {
+                TempData["ComputerDeleteError"] = $@"Must unassign Computer {computerToDelete.SerialNumber} {computerToDelete.Make} {computerToDelete.Model} from employee {assignedEmployee.FirstName} {assignedEmployee.LastName}.";
+                return RedirectToAction("Index");
+            }
+
+            context.Remove(computerToDelete);
+            await context.SaveChangesAsync();
+
+            TempData["ComputerDeleteSuccess"] = $"Success! Deleted Computer {computerToDelete.SerialNumber} {computerToDelete.Make} {computerToDelete.Model}.";
+
+            return RedirectToAction("Index");
+
         }
     }
 }
