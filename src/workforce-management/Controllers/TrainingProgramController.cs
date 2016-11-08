@@ -46,14 +46,14 @@ namespace workforce_management.Controllers
         public IActionResult Add()
         {
             var model = new TrainingProgramAdd();
-            model.Employees = context.Employee
-                .OrderBy(l => l.LastName)
-                .AsEnumerable()
-                .Select(li => new SelectListItem
-                {
-                    Text = li.LastName,
-                    Value = li.EmployeeId.ToString()
-                });
+            model.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+
+            foreach (Employee employee in model.Employees)
+            {
+                string fullName = employee.FirstName + " " + employee.LastName;
+                model.EmployeesFullName.Add(employee.EmployeeId, fullName);
+            }
+
             return View(model);
         }
         /**
@@ -67,9 +67,9 @@ namespace workforce_management.Controllers
         {
             if (ModelState.IsValid)
             {
-                TrainingProgram newTrainingProgram = trainingProgramAdd.NewTrainingProgram;
+                //TrainingProgram newTrainingProgram = trainingProgramAdd.NewTrainingProgram;
 
-                context.Add(newTrainingProgram);
+                context.Add(trainingProgramAdd.NewTrainingProgram);
                 await context.SaveChangesAsync();
 
                 if (trainingProgramAdd.EmployeeIds.Count() >= 0)

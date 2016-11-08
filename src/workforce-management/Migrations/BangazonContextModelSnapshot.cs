@@ -28,20 +28,13 @@ namespace workforcemanagement.Migrations
 
                     b.Property<int>("ProgramId");
 
-<<<<<<< HEAD
                     b.Property<int?>("TrainingProgramId");
 
-=======
->>>>>>> master
                     b.HasKey("AttendeeId");
 
                     b.HasIndex("EmployeeId");
 
-<<<<<<< HEAD
                     b.HasIndex("TrainingProgramId");
-=======
-                    b.HasIndex("ProgramId");
->>>>>>> master
 
                     b.ToTable("Attendee");
                 });
@@ -152,16 +145,9 @@ namespace workforcemanagement.Migrations
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-<<<<<<< HEAD
                     b.HasOne("Bangazon.Models.TrainingProgram", "TrainingProgram")
                         .WithMany()
                         .HasForeignKey("TrainingProgramId");
-=======
-                    b.HasOne("Bangazon.Models.TrainingProgram", "Program")
-                        .WithMany()
-                        .HasForeignKey("ProgramId")
-                        .OnDelete(DeleteBehavior.Cascade);
->>>>>>> master
                 });
 
             modelBuilder.Entity("Bangazon.Models.Employee", b =>
