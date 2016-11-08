@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using BangazonWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using workforce_management.ViewModels;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace workforce_management.Controllers
 {
-    public class TrainingProgramController: Controller
+    public class TrainingProgramController : Controller
     {
         /**
          * CLASS: ProductTypes
@@ -66,6 +64,17 @@ namespace workforce_management.Controllers
             var model = new TrainingProgramDetail();
             model.TrainingProgram = context.TrainingProgram.Single(p => p.TrainingProgramId == id);
             model.Attendees = from attendee in context.Attendee from employee in context.Employee where attendee.ProgramId == id where employee.EmployeeId == attendee.EmployeeId select employee;
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var model = new TrainingProgramEdit();
+            model.TrainingProgram = context.TrainingProgram.Single(p => p.TrainingProgramId == id);
+            model.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+            model.selectedAttendees = context.Attendee.Where(e => e.ProgramId == model.TrainingProgram.TrainingProgramId).Select(e => e.ProgramId).ToArray();
+
             return View(model);
         }
     }
