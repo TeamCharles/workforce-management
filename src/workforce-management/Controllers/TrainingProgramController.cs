@@ -71,14 +71,11 @@ namespace workforce_management.Controllers
                 context.Add(newTrainingProgram);
 
 
-                if (trainingProgramAdd.Employees != null)
+                if (trainingProgramAdd.EmployeeIds.Count() >= 0)
                 {
-                    foreach (SelectListItem employee in trainingProgramAdd.Employees)
+                    foreach (int employee in trainingProgramAdd.EmployeeIds)
                     {
-                        Attendee newattendee = new Attendee();
-                        newattendee.EmployeeId = Int32.Parse(employee.Value);
-                        newattendee.ProgramId = newTrainingProgram.TrainingProgramId;
-                        newattendee.TrainingProgram = newTrainingProgram;
+                        context.Attendee.Add(new Bangazon.Models.Attendee { EmployeeId = employee,  ProgramId = newTrainingProgram.TrainingProgramId });
                     }
                 }
 

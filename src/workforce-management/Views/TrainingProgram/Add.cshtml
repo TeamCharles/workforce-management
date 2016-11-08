@@ -23,7 +23,7 @@
         <div class="form-group">
             <label asp-for="NewTrainingProgram.Attendees" class="col-md-2 control-label">Add Employee</label>
             <div class="col-md-10">
-                @Html.ListBox("Employees", Model.Employees as MultiSelectList)
+                @Html.DropDownList("EmployeeIds", @Model.Employees, "Asign Employees")
                 <span asp-validation-for="NewTrainingProgram.Attendees" class="text-danger"></span>
             </div>
         </div>
@@ -34,5 +34,5 @@
             </div>
     </div>
 </form>
-                @*@Html.DropDownList("NewTrainingProgram.EmployeeId", @Model.Employees, "Asign Employees")*@
+                @*@Html.DropDownlist("EmployeeIds", @Model.Employees, "Select an Attendee", new { multiple = "true" })*@
 

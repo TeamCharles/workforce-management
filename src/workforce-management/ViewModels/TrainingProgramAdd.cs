@@ -14,5 +14,7 @@ namespace workforce_management.ViewModels
         public TrainingProgram NewTrainingProgram { get; set; }
 
         public IEnumerable<Attendee> Attendee { get; set; }
+        
+        public int[] EmployeeIds { get; set; }
     }
 }
