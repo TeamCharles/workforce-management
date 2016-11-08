@@ -12,11 +12,11 @@ namespace workforce_management.ViewModels
    * Methods:
    *    IEnumerable<SelectListItem> get and set
    */
-    public class SingleDepartment
+    public class EditDepartment
     {
         public IEnumerable<SelectListItem> Employees { get; set; }
 
-        public Department NewDepartment { get; set; }
+        public Department editDepartment { get; set; }
 
         public int[] EmployeeIds { get; set; }
 

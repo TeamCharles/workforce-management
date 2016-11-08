@@ -148,8 +148,8 @@ namespace workforce_management.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute]int id)
         {
-            var model = new SingleDepartment();
-            model.EditDepartment = await context.Department.SingleAsync(d => d.DepartmentId == id);
+            var model = new EditDepartment();
+            model.editDepartment = await context.Department.SingleAsync(d => d.DepartmentId == id);
 
             model.Employees = context.Employee
                 .OrderBy(e => e.LastName)
@@ -162,7 +162,7 @@ namespace workforce_management.Controllers
                 });
 
 
-            if (model.EditDepartment != null)
+            if (model.editDepartment != null)
             {
                 return View(model);
             }
@@ -170,5 +170,44 @@ namespace workforce_management.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditDepartment editDepartment)
+        {
+            if (ModelState.IsValid)
+            {
+                Department newInformation = editDepartment.editDepartment;
+
+                var departmentToEdit = await context.Department.SingleOrDefaultAsync(d => d.DepartmentId == newInformation.DepartmentId);
+
+
+                if (departmentToEdit == null)
+                {
+                    return NotFound();
+                }
+
+                departmentToEdit.Name = newInformation.Name;
+                departmentToEdit.Description = newInformation.Description;
+                context.Department.Update(departmentToEdit);
+
+                await context.SaveChangesAsync();
+
+                if (editDepartment.EmployeeIds.Count() > 0)
+                {
+                    foreach (int employee in editDepartment.EmployeeIds)
+                    {
+                        Employee employeeToChange = await context.Employee.SingleAsync(e => e.EmployeeId == employee);
+                        employeeToChange.DepartmentId = newInformation.DepartmentId;
+                        context.Employee.Update(employeeToChange);
+                    }
+                }
+
+                await context.SaveChangesAsync();
+
+            }
+            return RedirectToAction("Index");
+
         }
+    }
 }
