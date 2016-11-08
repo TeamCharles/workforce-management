@@ -69,7 +69,7 @@ namespace workforce_management.Controllers
                 TrainingProgram newTrainingProgram = trainingProgramAdd.NewTrainingProgram;
 
                 context.Add(newTrainingProgram);
-
+                await context.SaveChangesAsync();
 
                 if (trainingProgramAdd.EmployeeIds.Count() >= 0)
                 {
