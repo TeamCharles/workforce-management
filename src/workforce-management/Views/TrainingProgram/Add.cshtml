@@ -32,11 +32,11 @@
             <div class="col-md-10">
                 @if (Model.NewTrainingProgram == null)
                 {
-                    <input class="form-control" type="date" name="NewTrainingProgram.StartDate" id="TrainingProgram_StartDate" data-val="true" data-val-required="A Start Date is required." />
+                    <input class="form-control" type="date" name="NewTrainingProgram.StartDate" id="NewTrainingProgram_StartDate" data-val="true" data-val-required="A Start Date is required." />
                 }
                 else
                 {
-                    <input class="form-control" type="date" name="NewTrainingProgram.StartDate" id="TrainingProgram_StartDate" value="@Model.NewTrainingProgram.StartDate.ToString("yyyy-MM-dd")" data-val="true" data-val-required="A Start Date is required." />
+                    <input class="form-control" type="date" name="NewTrainingProgram.StartDate" id="NewTrainingProgram_StartDate" value="@Model.NewTrainingProgram.StartDate.ToString("yyyy-MM-dd")" data-val="true" data-val-required="A Start Date is required." />
                 }
                 <span asp-validation-for="NewTrainingProgram.StartDate" class="text-danger"></span>
             </div>

@@ -26,13 +26,13 @@ $(document).ready(function () {
     }
 
     // New Training Program Checks
-    if (location.pathname.includes("TrainingProgram/")) {
+    if (location.pathname.includes("TrainingProgram/Add")) {
         checkTrainingProgramFormStatus();
         $("form input").on("change", checkTrainingProgramFormStatus);
 
         // Checks whether all fields on the Employee Add/Edit form have been filled in
         function checkTrainingProgramFormStatus() {
-            if ($("#NewTrainingProgram_Name").val() && $("#NewTrainingProgram_Description").val()) {
+            if ($("#NewTrainingProgram_Name").val() && $("#NewTrainingProgram_Description").val() && $("#NewTrainingProgram_StartDate").val() && $("#NewTrainingProgram_EndDate").val()) {
                 $("input[type='submit']").attr("disabled", false);
             } else {
                 $("input[type='submit']").attr("disabled", true);
@@ -75,7 +75,7 @@ $(document).ready(function () {
      * Purpose: Checks to see if the input fields within the training program form are null or !null.
      **/
     function validateTrainingProgram() {
-        if ($("#TrainingProgram_Description").val() && $("#TrainingProgram_Name").val()) {
+        if ($("#TrainingProgram_Description").val() && $("#TrainingProgram_Name").val() && $("#TrainingProgram_StartDate").val() && $("#TrainingProgram_EndDate").val()) {
             $('input[type="submit"]').removeAttr("disabled");
         } else {
             $('input[type="submit"]').attr("disabled", true);
@@ -105,7 +105,9 @@ $(document).ready(function () {
 
         var trainingProgramEditFields = [
             $("#TrainingProgram_Description"),
-            $("#TrainingProgram_Name")
+            $("#TrainingProgram_Name"),
+            $("#TrainingProgram_StartDate"),
+            $("#TrainingProgram_EndDate")
         ];
  
         trainingProgramEditFields.forEach(field => {
