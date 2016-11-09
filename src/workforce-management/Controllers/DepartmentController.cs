@@ -151,15 +151,16 @@ namespace workforce_management.Controllers
             var model = new EditDepartment();
             model.editDepartment = await context.Department.SingleAsync(d => d.DepartmentId == id);
 
-            model.Employees = context.Employee
-                .OrderBy(e => e.LastName)
-                .AsEnumerable()
-                .Where(e => e.EndDate == null && e.DepartmentId != id)
-                .Select(li => new SelectListItem
-                {
-                    Text = li.LastName + " " + li.FirstName,
-                    Value = li.EmployeeId.ToString()
-                });
+            model.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+
+            foreach (Employee employee in model.Employees)
+            {
+                string fullName = employee.FirstName + " " + employee.LastName;
+                model.EmployeesFullName.Add(employee.EmployeeId, fullName);
+            }
+
+            model.selectedEmployees = context.Attendee.Where(e => e.ProgramId == model.editDepartment.DepartmentId).Select(e => e.EmployeeId).ToArray();
+
 
 
             if (model.editDepartment != null)
@@ -175,39 +176,62 @@ namespace workforce_management.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditDepartment editDepartment)
         {
+            Department originalDepartment = context.Department.Single(p => p.DepartmentId == editDepartment.editDepartment.DepartmentId);
+            Attendee[] attendeeList = context.Attendee.Where(a => a.ProgramId == originalDepartment.DepartmentId).ToArray();
+
             if (ModelState.IsValid)
             {
-                Department newInformation = editDepartment.editDepartment;
-
-                var departmentToEdit = await context.Department.SingleOrDefaultAsync(d => d.DepartmentId == newInformation.DepartmentId);
 
 
-                if (departmentToEdit == null)
+                if (editDepartment.selectedEmployees != null)
                 {
-                    return NotFound();
-                }
+                    Employee[] employees = context.Employee.Where(e => !editDepartment.selectedEmployees.Contains(e.EmployeeId)).ToArray();
 
-                departmentToEdit.Name = newInformation.Name;
-                departmentToEdit.Description = newInformation.Description;
-                context.Department.Update(departmentToEdit);
-
-                await context.SaveChangesAsync();
-
-                if (editDepartment.EmployeeIds.Count() > 0)
-                {
-                    foreach (int employee in editDepartment.EmployeeIds)
+                    foreach (Employee employee in employees)
                     {
-                        Employee employeeToChange = await context.Employee.SingleAsync(e => e.EmployeeId == employee);
-                        employeeToChange.DepartmentId = newInformation.DepartmentId;
-                        context.Employee.Update(employeeToChange);
+                        Attendee isListed = attendeeList.SingleOrDefault(a => a.EmployeeId == employee.EmployeeId);
+                        if (isListed != null)
+                        {
+                            context.Attendee.Remove(isListed);
+                        }
+                    }
+
+
+                    foreach (int attendeeId in editDepartment.selectedEmployees)
+                    {
+                        Attendee employeeSelected = context.Attendee.Where(e => e.EmployeeId == attendeeId).SingleOrDefault(e => e.ProgramId == editDepartment.editDepartment.DepartmentId);
+                        if (employeeSelected == null)
+                        {
+                            context.Attendee.Add(new Bangazon.Models.Attendee { EmployeeId = attendeeId, ProgramId = originalDepartment.DepartmentId });
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Attendee attendee in attendeeList)
+                    {
+                        context.Attendee.Remove(attendee);
                     }
                 }
 
+                originalDepartment.Name = editDepartment.editDepartment.Name;
+                originalDepartment.Description = editDepartment.editDepartment.Description;
+                context.Department.Update(originalDepartment);
+
                 await context.SaveChangesAsync();
 
-            }
-            return RedirectToAction("Index");
+                return RedirectToAction("Detail", new { id = editDepartment.editDepartment.DepartmentId });
 
-        }
+            }
+            editDepartment.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+
+            foreach (Employee employee in editDepartment.Employees)
+            {
+                string fullName = employee.FirstName + " " + employee.LastName;
+                editDepartment.EmployeesFullName.Add(employee.EmployeeId, fullName);
+            }
+
+            return View(editDepartment);
+        } 
     }
 }

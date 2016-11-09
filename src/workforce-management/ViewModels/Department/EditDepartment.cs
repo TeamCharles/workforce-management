@@ -14,11 +14,13 @@ namespace workforce_management.ViewModels
    */
     public class EditDepartment
     {
-        public IEnumerable<SelectListItem> Employees { get; set; }
+        public List<Employee> Employees { get; set; }
 
         public Department editDepartment { get; set; }
+        public int[] selectedEmployees { get; set; }
 
-        public int[] EmployeeIds { get; set; }
+
+        public Dictionary<int, string> EmployeesFullName { get; set; } = new Dictionary<int, string>();
 
     }
 }

@@ -1,39 +1,43 @@
 ﻿@model workforce_management.ViewModels.EditDepartment
 @using Bangazon.Models;
-@{
-    ViewData["Title"] = "Edit a Department";
-}
-
-<h2>@ViewData["Title"]</h2>
 
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <hr>
         <div class="form-group">
-            <label asp-for="editDepartment.Name" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="editDepartment.Name" class="form-control departmentName" placeholder="Department Name" />
-                <span asp-validation-for="editDepartment.Name" class="text-danger"></span>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="editDepartment.Name" class="col-md-2 control-label">Training Program Name</label>
+                <div class="col-md-10">
+                    <input asp-for="editDepartment.Name" class="form-control departmentName" placeholder="@Html.DisplayFor(model => model.editDepartment.Name)" />
+                    <span asp-validation-for="editDepartment.Name" class="text-danger"></span>
+                </div>
             </div>
         </div>
+
         <div class="form-group">
-            <label asp-for="editDepartment.Description" class="col-md-2 control-label"></label>
+            <label asp-for="editDepartment.Description" class="col-md-2 control-label">Description</label>
             <div class="col-md-10">
-                <input asp-for="editDepartment.Description" class="form-control departmentDescription" placeholder="Department Description" />
+                <input asp-for="editDepartment.Description" class="form-control departmentDescription" placeholder="@Html.DisplayFor(model => model.editDepartment.Description)" />
                 <span asp-validation-for="editDepartment.Description" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group">
-            <label asp-for="editDepartment.Employees" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <dl class="dropdown">
-                    @Html.DropDownList("editDepartment.EmployeeIds", @Model.Employees, "Add an Employee", new { multiple = "true" }) 
 
-                </dl>
+        <div class="form-group">
+            <label asp-validation-for="Employees" class="col-md-2 control-label">Selected Attendees</label>
+            <div class="col-md-10">
+                <span class="text-danger"></span>
+                @Html.ListBoxFor(m => m.selectedEmployees, new MultiSelectList(Model.EmployeesFullName, "Key", "Value", null), new { @class = "form-control" })
             </div>
         </div>
-        @Html.Hidden("editDepartment.DepartmentId", Model.editDepartment.DepartmentId);
-        <input type="submit" value="Edit Department" class="btn btn-default" id="departmentBtn" />
+
+        @Html.Hidden("TrainingProgram.TrainingProgramId", Model.editDepartment.DepartmentId)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save Changes" class="btn btn-default" id="departmentBtn" />
+            </div>
+        </div>
+    </div>
     </div>
 </form>
