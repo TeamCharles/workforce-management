@@ -144,6 +144,14 @@ namespace workforce_management.Controllers
             var model = new SingleDepartment();
 
             return RedirectToAction("Index");
+
+       /**
+        * Purpose: Provides Edit Form
+        * Arguments:
+        *    This method takes the department id to populate the form.
+        * Return:
+        *     Redirect to the Department form
+        **/
         }
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute]int id)
@@ -172,6 +180,13 @@ namespace workforce_management.Controllers
         }
 
 
+        /**
+         * Purpose: Actually updates the database to reflect changes  
+         * Arguments:
+         *    Completed editdepartment form
+         * Return:
+         *     Redirect user to detail view for the newly changed department.
+         **/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditDepartment form)

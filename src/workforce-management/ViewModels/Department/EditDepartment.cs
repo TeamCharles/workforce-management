@@ -11,6 +11,10 @@ namespace workforce_management.ViewModels
    * Author:Garrett Vangilder
    * Methods:
    *    IEnumerable<SelectListItem> get and set
+   *    List<Employee> get and set for edit department controller
+   *    Department editDepartment allows for users to set values to edited department
+   *    public int[] selectedEmployees - allows for users to see the employees within the department
+   *    public Dictionary<int, string> EmployeesFullName - provides full name of employees
    */
     public class EditDepartment
     {
