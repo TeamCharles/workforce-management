@@ -71,7 +71,7 @@
             @foreach (Employee attendee in Model.Attendees)
             {
                 <tr>
-                    <td><a asp-controller="Employee" asp-action="Edit" asp-route-id="@attendee.EmployeeId">@Html.DisplayFor(model => attendee.FirstName) @Html.DisplayFor(model => attendee.LastName)</a></td>
+                    <td><a asp-controller="Employee" asp-action="Detail" asp-route-id="@attendee.EmployeeId">@Html.DisplayFor(model => attendee.FirstName) @Html.DisplayFor(model => attendee.LastName)</a></td>
                     <td>@Html.DisplayFor(model => attendee.Computer.Make)</td>
                     <td>@Html.DisplayFor(model => attendee.Computer.Model)</td>
                     <td>SN: @Html.DisplayFor(model => attendee.Computer.SerialNumber)</td>
