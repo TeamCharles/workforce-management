@@ -65,6 +65,13 @@ namespace workforce_management.Controllers
             var model = new TrainingProgramDetail();
             model.TrainingProgram = context.TrainingProgram.Single(p => p.TrainingProgramId == id);
             model.Attendees = from attendee in context.Attendee from employee in context.Employee where attendee.ProgramId == id where employee.EmployeeId == attendee.EmployeeId select employee;
+
+            foreach(Employee attendee in model.Attendees)
+            {
+                attendee.Department = context.Department.Where(d => d.DepartmentId == attendee.DepartmentId).SingleOrDefault();
+                attendee.Computer = context.Computer.Where(c => c.ComputerId == attendee.ComputerId).SingleOrDefault();
+            }
+
             return View(model);
         }
 
