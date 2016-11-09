@@ -22,8 +22,9 @@ namespace workforce_management.ViewModels
         public Employee Employee { get; set; }
         public IEnumerable<SelectListItem> Departments { get; set; }
         public IEnumerable<SelectListItem> Computers { get; set; }
-        public IEnumerable<SelectListItem> TrainingPrograms { get; set; }
+        public IEnumerable<TrainingProgram> TrainingPrograms { get; set; }
         public int[] EnrolledTraining { get; set; }
+        public int? NewComputerId { get; set; }
 
         /**
          * Purpose: Constructor that populates select inputs for Departments, Unassigned Computers, TrainingPrograms
@@ -35,9 +36,9 @@ namespace workforce_management.ViewModels
         public EmployeeForm(BangazonContext ctx)
         {
             this.Departments = ctx.Department.AsEnumerable().Select(li => new SelectListItem { Value = li.DepartmentId.ToString(), Text = li.Name });
-            this.TrainingPrograms = ctx.TrainingProgram.AsEnumerable().Select(li => new SelectListItem { Value = li.TrainingProgramId.ToString(), Text = li.Name });
             this.Computers = from computer in ctx.Computer where ctx.Employee.All(e => e.ComputerId != computer.ComputerId)
                                 select new SelectListItem { Value = computer.ComputerId.ToString(), Text = computer.Model };
+            this.TrainingPrograms = ctx.TrainingProgram.AsEnumerable();
         }
 
         /**
