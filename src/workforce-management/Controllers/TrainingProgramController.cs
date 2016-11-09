@@ -65,7 +65,6 @@ namespace workforce_management.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(TrainingProgramAdd trainingProgramAdd)
         {
-            var model = new TrainingProgramAdd();
 
             if (ModelState.IsValid)
             {
@@ -84,7 +83,16 @@ namespace workforce_management.Controllers
                 await context.SaveChangesAsync();
                 return RedirectToAction("Detail", new RouteValueDictionary(new { controller = "TrainingProgram", action = "Detail", Id = trainingProgramAdd.NewTrainingProgram.TrainingProgramId}) );
             }
-            return RedirectToAction("Add", new RouteValueDictionary(new { controller = "TrainingProgram", action = "Add"}));
+
+            var model = new TrainingProgramAdd();
+            model.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+
+            foreach (Employee employee in model.Employees)
+            {
+                string fullName = employee.FirstName + " " + employee.LastName;
+                model.EmployeesFullName.Add(employee.EmployeeId, fullName);
+            }
+            return View(model);
         }
 
         /**

@@ -23,6 +23,5 @@ namespace workforce_management.ViewModels
         public int[] EmployeeIds { get; set; }
 
         public Dictionary<int, string> EmployeesFullName { get; set; } = new Dictionary<int, string>();
-
     }
 }
