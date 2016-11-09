@@ -155,7 +155,15 @@ namespace workforce_management.Controllers
                 return RedirectToAction("Detail", new { id = editedProgram.TrainingProgram.TrainingProgramId });
             }
 
-            return View(originalProgram);
+            editedProgram.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+
+            foreach (Employee employee in editedProgram.Employees)
+            {
+                string fullName = employee.FirstName + " " + employee.LastName;
+                editedProgram.EmployeesFullName.Add(employee.EmployeeId, fullName);
+            }
+
+            return View(editedProgram);
         }
     }
 }
