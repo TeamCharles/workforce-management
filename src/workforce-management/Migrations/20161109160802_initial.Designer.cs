@@ -8,7 +8,7 @@ using BangazonWeb.Data;
 namespace workforcemanagement.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    [Migration("20161109150912_initial")]
+    [Migration("20161109160802_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,11 +29,13 @@ namespace workforcemanagement.Migrations
 
                     b.Property<int>("ProgramId");
 
+                    b.Property<int?>("TrainingProgramId");
+
                     b.HasKey("AttendeeId");
 
                     b.HasIndex("EmployeeId");
 
-                    b.HasIndex("ProgramId");
+                    b.HasIndex("TrainingProgramId");
 
                     b.ToTable("Attendee");
                 });
@@ -144,10 +146,9 @@ namespace workforcemanagement.Migrations
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Bangazon.Models.TrainingProgram", "Program")
+                    b.HasOne("Bangazon.Models.TrainingProgram", "TrainingProgram")
                         .WithMany()
-                        .HasForeignKey("ProgramId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TrainingProgramId");
                 });
 
             modelBuilder.Entity("Bangazon.Models.Employee", b =>

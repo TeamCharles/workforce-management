@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    if (location.pathname.includes("edit")) {
+    if (location.pathname.includes("Edit")) {
         checkEmployeeEditStatus();
         $("#employeeEdit input").on("change", checkEmployeeEditStatus);
         $("#employeeEdit select").on("change", checkEmployeeEditStatus);
@@ -21,6 +21,21 @@ $(document).ready(function () {
                 $("#employeeSubmit").attr("disabled", false);
             } else {
                 $("#employeeSubmit").attr("disabled", true);
+            }
+        }
+    }
+
+    // New Training Program Checks
+    if (location.pathname.includes("TrainingProgram/")) {
+        checkTrainingProgramFormStatus();
+        $("form input").on("change", checkTrainingProgramFormStatus);
+
+        // Checks whether all fields on the Employee Add/Edit form have been filled in
+        function checkTrainingProgramFormStatus() {
+            if ($("#NewTrainingProgram_Name").val() && $("#NewTrainingProgram_Description").val()) {
+                $("input[type='submit']").attr("disabled", false);
+            } else {
+                $("input[type='submit']").attr("disabled", true);
             }
         }
     }

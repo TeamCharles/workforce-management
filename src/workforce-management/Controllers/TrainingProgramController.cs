@@ -3,6 +3,10 @@ using BangazonWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using workforce_management.ViewModels;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace workforce_management.Controllers
 {
@@ -11,7 +15,7 @@ namespace workforce_management.Controllers
         /**
          * CLASS: TrainingProgram
          * PURPOSE: Creates routes for main index view (buy method) and seller view (sell method)
-         * AUTHOR: Matt Kraatz/Dayne Wright
+         * AUTHOR: Matt Kraatz/Anulfo Ordaz/Garrett Vangilder/Dayne Wright
          * METHODS:
          *   TrainingProgramController(BangazonContext) - Constructor that saves the database context to a private variable.
          *   IActionResult Index() - Returns a View listing all Training Programs.
@@ -32,9 +36,68 @@ namespace workforce_management.Controllers
         }
 
         /**
-         * Purpose: Creates a View list all Training Programs currently in the database
+         * Purpose: Creates a View of the Training Program Form and populates the employees list
          * Return:
-         *      View containing a list of all Training Programs
+         *      Create Training Program Form View
+         */
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            var model = new TrainingProgramAdd();
+            model.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+
+            foreach (Employee employee in model.Employees)
+            {
+                string fullName = employee.FirstName + " " + employee.LastName;
+                model.EmployeesFullName.Add(employee.EmployeeId, fullName);
+            }
+
+            return View(model);
+        }
+        /**
+         * Purpose: Check if the form is valid, add a new training program to database, and add attendees to the database
+         * Arguments:
+         *      TrainingProgramAdd trainingProgramAdd - TrainingProgramAdd View Model containing fields to populate the dropdownlist and receive the array of EmployeeIds. 
+         */
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(TrainingProgramAdd trainingProgramAdd)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                context.Add(trainingProgramAdd.NewTrainingProgram);
+                await context.SaveChangesAsync();
+
+                if(trainingProgramAdd.EmployeeIds != null && trainingProgramAdd.EmployeeIds.Count() >= 0)
+                {
+                    foreach (int employee in trainingProgramAdd.EmployeeIds)
+                    {
+                        context.Attendee.Add(new Bangazon.Models.Attendee { EmployeeId = employee,  ProgramId = trainingProgramAdd.NewTrainingProgram.TrainingProgramId });
+                    }
+                }
+
+                await context.SaveChangesAsync();
+                return RedirectToAction("Detail", new RouteValueDictionary(new { controller = "TrainingProgram", action = "Detail", Id = trainingProgramAdd.NewTrainingProgram.TrainingProgramId}) );
+            }
+
+            var model = new TrainingProgramAdd();
+            model.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+
+            foreach (Employee employee in model.Employees)
+            {
+                string fullName = employee.FirstName + " " + employee.LastName;
+                model.EmployeesFullName.Add(employee.EmployeeId, fullName);
+            }
+            return View(model);
+        }
+
+        /**
+         * Purpose: Creates a View of every training program available and every attendee that it holds
+         * Return:
+         *      Training Program Index View
          */
         [HttpGet]
         public IActionResult Index()
@@ -50,11 +113,11 @@ namespace workforce_management.Controllers
         }
 
         /**
-         * Purpose: Creates a View list all Training Programs currently in the database
+         * Purpose: Creates a Detail View of a specific training program
          * Arguments:
          *      int id - TrainingProgramId for the detail being requested
          * Return:
-         *      View containing a list of all Training Programs
+         *      A Detail View for the Trainig program Selected
          */
         public IActionResult Detail(int id)
         {

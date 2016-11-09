@@ -93,7 +93,8 @@ namespace workforcemanagement.Migrations
                         .Annotation("Autoincrement", true),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "strftime('%Y-%m-%d %H:%M:%S')"),
                     EmployeeId = table.Column<int>(nullable: false),
-                    ProgramId = table.Column<int>(nullable: false)
+                    ProgramId = table.Column<int>(nullable: false),
+                    TrainingProgramId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -105,11 +106,11 @@ namespace workforcemanagement.Migrations
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Attendee_TrainingProgram_ProgramId",
-                        column: x => x.ProgramId,
+                        name: "FK_Attendee_TrainingProgram_TrainingProgramId",
+                        column: x => x.TrainingProgramId,
                         principalTable: "TrainingProgram",
                         principalColumn: "TrainingProgramId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -118,9 +119,9 @@ namespace workforcemanagement.Migrations
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attendee_ProgramId",
+                name: "IX_Attendee_TrainingProgramId",
                 table: "Attendee",
-                column: "ProgramId");
+                column: "TrainingProgramId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_ComputerId",
