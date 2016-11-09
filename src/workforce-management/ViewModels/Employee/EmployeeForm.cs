@@ -38,7 +38,7 @@ namespace workforce_management.ViewModels
             this.Departments = ctx.Department.AsEnumerable().Select(li => new SelectListItem { Value = li.DepartmentId.ToString(), Text = li.Name });
             this.Computers = from computer in ctx.Computer where ctx.Employee.All(e => e.ComputerId != computer.ComputerId)
                                 select new SelectListItem { Value = computer.ComputerId.ToString(), Text = computer.Model };
-            this.TrainingPrograms = ctx.TrainingProgram.AsEnumerable();
+            this.TrainingPrograms = ctx.TrainingProgram.AsEnumerable().Where(t => t.EndDate > DateTime.Now);
         }
 
         /**

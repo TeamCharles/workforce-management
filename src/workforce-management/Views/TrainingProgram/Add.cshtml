@@ -27,6 +27,34 @@
                 <span asp-validation-for="NewTrainingProgram.Attendees" class="text-danger"></span>
             </div>
         </div>
+        <div class="form-group">
+            <label asp-for="NewTrainingProgram.StartDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @if (Model.NewTrainingProgram == null)
+                {
+                    <input class="form-control" type="date" name="NewTrainingProgram.StartDate" id="NewTrainingProgram_StartDate" data-val="true" data-val-required="A Start Date is required." />
+                }
+                else
+                {
+                    <input class="form-control" type="date" name="NewTrainingProgram.StartDate" id="NewTrainingProgram_StartDate" value="@Model.NewTrainingProgram.StartDate.ToString("yyyy-MM-dd")" data-val="true" data-val-required="A Start Date is required." />
+                }
+                <span asp-validation-for="NewTrainingProgram.StartDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="NewTrainingProgram.EndDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @if (Model.NewTrainingProgram == null)
+                {
+                    <input class="form-control" type="date" name="NewTrainingProgram.EndDate" id="NewTrainingProgram_EndDate" data-val="true" data-val-required="A End Date is required." />
+                }
+                else
+                {
+                    <input class="form-control" type="date" name="NewTrainingProgram.EndDate" id="NewTrainingProgram_EndDate" value="@Model.NewTrainingProgram.EndDate.ToString("yyyy-MM-dd")" data-val="true" data-val-required="A Start Date is required." />
+                }
+                <span asp-validation-for="NewTrainingProgram.EndDate" class="text-danger"></span>
+            </div>
+        </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Save New Training Program" class="btn btn-default" />

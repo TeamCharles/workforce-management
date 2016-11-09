@@ -31,6 +31,36 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label asp-for="TrainingProgram.StartDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @if (Model.TrainingProgram == null)
+                {
+                    <input class="form-control" type="date" name="TrainingProgram.StartDate" id="TrainingProgram_StartDate" data-val="true" data-val-required="A Start Date is required." />
+                }
+                else
+                {
+                    <input class="form-control" type="date" name="TrainingProgram.StartDate" id="TrainingProgram_StartDate" value="@Model.TrainingProgram.StartDate.ToString("yyyy-MM-dd")" data-val="true" data-val-required="A Start Date is required." />
+                }
+                <span asp-validation-for="TrainingProgram.StartDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TrainingProgram.EndDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @if (Model.TrainingProgram == null)
+                {
+                    <input class="form-control" type="date" name="TrainingProgram.EndDate" id="TrainingProgram_EndDate" data-val="true" data-val-required="A Start Date is required." />
+                }
+                else
+                {
+                    <input class="form-control" type="date" name="TrainingProgram.EndDate" id="TrainingProgram_EndDate" value="@Model.TrainingProgram.EndDate.ToString("yyyy-MM-dd")" data-val="true" data-val-required="A Start Date is required." />
+                }
+                <span asp-validation-for="TrainingProgram.EndDate" class="text-danger"></span>
+            </div>
+        </div>
+
         @Html.Hidden("TrainingProgram.TrainingProgramId", Model.TrainingProgram.TrainingProgramId)
 
         <div class="form-group">

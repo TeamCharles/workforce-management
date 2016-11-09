@@ -28,6 +28,15 @@ namespace Bangazon.Models
         [StringLength(255)]
         public string Description { get; set; }
 
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime EndDate { get; set; }
+
+
         // Foreign Key Dependencies
         public ICollection<Attendee> Attendees;
 

@@ -201,15 +201,22 @@ namespace BangazonWeb.Data
                     {
                         new TrainingProgram {
                             Name = "SQL for Squares",
-                            Description = "Surely the title tells you enough"
+                            Description = "Surely the title tells you enough",
+                            StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                            EndDate = new DateTime(2008, 3, 1, 7, 0, 1)
                         },
                         new TrainingProgram {
                             Name = "PowerPoint for Developers",
-                            Description = "Who knew PowerPoint was so powerful!"
+                            Description = "Who knew PowerPoint was so powerful!",
+                            StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                            EndDate = new DateTime(2019, 3, 1, 7, 0, 1)
+
                         },
                         new TrainingProgram {
                             Name = "Visual Studio for JavaScript Developers",
-                            Description = "Your computer is probably broken!"
+                            Description = "Your computer is probably broken!",
+                            StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                            EndDate = new DateTime(2019, 3, 1, 7, 0, 1)
                         }
                     };
 

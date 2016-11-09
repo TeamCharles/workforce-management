@@ -10,6 +10,8 @@
             <th>Name</th>
             <th>Descriptions</th>
             <th>Attendees</th>
+            <th>Start Date</th>
+            <th>End Date</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +21,9 @@
                 <td><a asp-controller="TrainingProgram" asp-action="Detail" asp-route-id="@program.TrainingProgramId">@Html.DisplayFor(model => program.Name)</a></td>
                 <td>@Html.DisplayFor(model => program.Description)</td>
                 <td>@Html.DisplayFor(model => model.AttendeeCount[program.TrainingProgramId])</td>
+                <td>@program.StartDate.ToString("dd-MM-yyyy")</td>
+                <td>@program.EndDate.ToString("dd-MM-yyyy")</td>
+
             </tr>
         }
     </tbody>
