@@ -44,6 +44,16 @@ $(document).ready(function () {
             $("#computerAddBtn").attr("disabled", true)
         }
     }
+    /**
+     * Purpose: Checks to see if the input fields within the training program form are null or !null.
+     **/
+    function validateTrainingProgram() {
+        if ($("#TrainingProgram_Description").val() && $("#TrainingProgram_Name").val()) {
+            $('input[type="submit"]').removeAttr("disabled");
+        } else {
+            $('input[type="submit"]').attr("disabled", true);
+        }
+    }
 
     /**
      * Purpose: Checks to see if the input fields within the add computer view are null or !null.
@@ -57,14 +67,23 @@ $(document).ready(function () {
     }
 
     /**
-     * Purpose: Adds event listeners to the computer add form fields to validate the form
+     * Purpose: Adds event listeners to the computer add form fields to validate the form & training form fields
      **/
-    (function addListenersToAddComputerFields() {
+    (function() {
         var computerFieldItems = [
             $(".computerAddSerialNumber"),
             $(".computerAddMake"),
             $(".computerAddModel")
         ];
+
+        var trainingProgramEditFields = [
+            $("#TrainingProgram_Description"),
+            $("#TrainingProgram_Name")
+        ];
+ 
+        trainingProgramEditFields.forEach(field => {
+            field.on("change", validateTrainingProgram);
+        });
 
         computerFieldItems.forEach(field => {
             field.on("change", validateAddComputerForm);
