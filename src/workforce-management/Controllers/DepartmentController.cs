@@ -47,7 +47,7 @@ namespace workforce_management.Controllers
         public IActionResult Index()
         {
             var model = new DepartmentIndex();
-            model.DepartmentList = from department in context.Department select department;
+            model.DepartmentList = from department in context.Department orderby department.Name select department;
 
             return View(model);
         }
@@ -125,7 +125,7 @@ namespace workforce_management.Controllers
                 context.Add(newDepartment);
                 await context.SaveChangesAsync();
 
-                if (singleDepartment.EmployeeIds.Count() > 0)
+                if (singleDepartment.EmployeeIds != null && singleDepartment.EmployeeIds.Count() > 0)
                 {
                     foreach (int employee in singleDepartment.EmployeeIds)
                     {
@@ -135,15 +135,13 @@ namespace workforce_management.Controllers
                     }
                 }
 
-
                 await context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Detail", new { id = singleDepartment.NewDepartment.DepartmentId });
             }
 
-
             var model = new SingleDepartment();
-
-            return RedirectToAction("Index");
+            model.NewDepartment = singleDepartment.NewDepartment;
+            return View(model);
         }
 
     }
