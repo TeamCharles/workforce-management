@@ -158,15 +158,13 @@ namespace workforce_management.Controllers
             var model = new EditDepartment();
             model.editDepartment = await context.Department.SingleAsync(d => d.DepartmentId == id);
 
-            model.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+            model.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null && e.DepartmentId != id).ToList();
 
             foreach (Employee employee in model.Employees)
             {
                 string fullName = employee.FirstName + " " + employee.LastName;
                 model.EmployeesFullName.Add(employee.EmployeeId, fullName);
             }
-
-            model.selectedEmployees = context.Attendee.Where(e => e.ProgramId == model.editDepartment.DepartmentId).Select(e => e.EmployeeId).ToArray();
 
 
 
@@ -191,7 +189,7 @@ namespace workforce_management.Controllers
         public async Task<IActionResult> Edit(EditDepartment form)
         {
             Department originalDepartment = context.Department.Single(p => p.DepartmentId == form.editDepartment.DepartmentId);
-            Attendee[] attendeeList = context.Attendee.Where(a => a.ProgramId == originalDepartment.DepartmentId).ToArray();
+            Employee[] emp = context.Employee.Where(a => a.DepartmentId == originalDepartment.DepartmentId).ToArray();
 
             if (ModelState.IsValid)
             {
@@ -201,30 +199,14 @@ namespace workforce_management.Controllers
                 {
                     Employee[] employees = context.Employee.Where(e => !form.selectedEmployees.Contains(e.EmployeeId)).ToArray();
 
-                    foreach (Employee employee in employees)
+                    foreach (int employeeId in form.selectedEmployees)
                     {
-                        Attendee isListed = attendeeList.SingleOrDefault(a => a.EmployeeId == employee.EmployeeId);
-                        if (isListed != null)
+                        Employee employeeSelected = context.Employee.SingleOrDefault(e => e.EmployeeId == employeeId);
+                        if (employeeSelected != null)
                         {
-                            context.Attendee.Remove(isListed);
+                            employeeSelected.DepartmentId = form.editDepartment.DepartmentId;
+                            context.Employee.Update(employeeSelected);
                         }
-                    }
-
-
-                    foreach (int attendeeId in form.selectedEmployees)
-                    {
-                        Attendee employeeSelected = context.Attendee.Where(e => e.EmployeeId == attendeeId).SingleOrDefault(e => e.ProgramId == form.editDepartment.DepartmentId);
-                        if (employeeSelected == null)
-                        {
-                            context.Attendee.Add(new Bangazon.Models.Attendee { EmployeeId = attendeeId, ProgramId = originalDepartment.DepartmentId });
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (Attendee attendee in attendeeList)
-                    {
-                        context.Attendee.Remove(attendee);
                     }
                 }
 
@@ -237,7 +219,8 @@ namespace workforce_management.Controllers
                 return RedirectToAction("Detail", new { id = form.editDepartment.DepartmentId });
 
             }
-            form.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null).ToList();
+
+            form.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null && e.DepartmentId != form.editDepartment.DepartmentId).ToList();
 
             foreach (Employee employee in form.Employees)
             {

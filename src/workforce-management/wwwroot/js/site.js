@@ -54,11 +54,10 @@ $(document).ready(function () {
             $("#departmentBtn").prop("disabled", true)
         }
     }
+    entryCheck();
 
-    $("#departmentBtn").prop("disabled", true);
-
+    
     $(".departmentName").on("change", entryCheck);
-
     $(".departmentDescription").on("change", entryCheck);
     
     /**
