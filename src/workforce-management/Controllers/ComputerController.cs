@@ -20,7 +20,9 @@ namespace workforce_management.Controllers
      * Methods:
      *     IActionResult Index() - Computer list view
      *     IActionResult Add() - Computer add view
-     *     Task<IActionResult> Add(Computer computerAdd) - Add new computer to database
+     *     Task<IActionResult> Add(ComputerAdd computerAdd) - Add new computer to database
+     *     Task<IActionResult> Edit(int computerId) - Load the edit view with the computer to edit
+     *     Task<IActionResult> Edit(ComputerEdit computerAdd) - Edit a computer in the database
      *     Task<IActionResult> Delete(int computerId) - Removes a computer from DB and unassigns its employee
      */
     public class ComputerController : Controller
@@ -134,6 +136,57 @@ namespace workforce_management.Controllers
             return View(computerAdd);
         }
 
+
+        /**
+         * Purpose: Loads view model with computer to edit
+         * Arguments:
+         *     id - Computer id to edit
+         * Return:
+         *     Edit view
+         */
+        [HttpGet]
+        public async Task<IActionResult> Edit([FromRoute]int id)
+        {
+            var model = new ComputerEdit();
+            model.ComputerToEdit = await context.Computer.SingleAsync(c => c.ComputerId == id);
+            return View(model);
+        }
+
+        /**
+         * Purpose: Updates a computer in the database
+         * Arguments:
+         *     computerEdit - Computer View Model with edited computer
+         * Return:
+         *     Computer list view if success or computer edit view if invalid model
+         */
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ComputerEdit computerEdit)
+        {
+            if (ModelState.IsValid)
+            {
+                Computer editedComputer = computerEdit.ComputerToEdit;
+
+                Computer computerToEdit = await (
+                    from computer in context.Computer
+                    where editedComputer.ComputerId == computer.ComputerId
+                    select computer).SingleOrDefaultAsync();
+
+                if (computerToEdit == null)
+                {
+                    return NotFound();
+                }
+
+                computerToEdit.SerialNumber = editedComputer.SerialNumber;
+                computerToEdit.Make = editedComputer.Make;
+                computerToEdit.Model = editedComputer.Model;
+
+                context.Computer.Update(computerToEdit);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(computerEdit);
+        }
 
         /**
          * Purpose: Deletes a computer from the database
