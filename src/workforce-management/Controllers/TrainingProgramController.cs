@@ -3,10 +3,6 @@ using BangazonWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using workforce_management.ViewModels;
 using Bangazon.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Routing;
-using System.Threading.Tasks;
-using System;
 
 namespace workforce_management.Controllers
 {
