@@ -1,14 +1,27 @@
 $(document).ready(function () {
-    checkEmployeeFormStatus();
-    $("#employeeAdd input").on("change", checkEmployeeFormStatus);
-    $("#employeeAdd select").on("change", checkEmployeeFormStatus);
+    if (location.pathname.includes("edit")) {
+        checkEmployeeEditStatus();
+        $("#employeeEdit input").on("change", checkEmployeeEditStatus);
+        $("#employeeEdit select").on("change", checkEmployeeEditStatus);
+        function checkEmployeeEditStatus() {
+            if ($("#Employee_FirstName").val() && $("#Employee_LastName").val() && $("#Employee_StartDate").val() && $("#Employee_DepartmentId").val()) {
+                $("#employeeSubmit").attr("disabled", false);
+            } else {
+                $("#employeeSubmit").attr("disabled", true);
+            }
+        }
+    } else {
+        checkEmployeeFormStatus();
+        $("#employeeAdd input").on("change", checkEmployeeFormStatus);
+        $("#employeeAdd select").on("change", checkEmployeeFormStatus);
 
-    // Checks whether all fields on the Employee Add/Edit form have been filled in
-    function checkEmployeeFormStatus() {
-        if ($("#Employee_FirstName").val() && $("#Employee_LastName").val() && $("#Employee_StartDate").val() && $("#Employee_DepartmentId").val() && $("#Employee_ComputerId").val()) {
-            $("#employeeSubmit").attr("disabled", false);
-        } else {
-            $("#employeeSubmit").attr("disabled", true); 
+        // Checks whether all fields on the Employee Add/Edit form have been filled in
+        function checkEmployeeFormStatus() {
+            if ($("#Employee_FirstName").val() && $("#Employee_LastName").val() && $("#Employee_StartDate").val() && $("#Employee_DepartmentId").val() && $("#Employee_ComputerId").val()) {
+                $("#employeeSubmit").attr("disabled", false);
+            } else {
+                $("#employeeSubmit").attr("disabled", true);
+            }
         }
     }
 
