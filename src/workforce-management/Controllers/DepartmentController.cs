@@ -140,9 +140,95 @@ namespace workforce_management.Controllers
             }
 
             var model = new SingleDepartment();
+
             model.NewDepartment = singleDepartment.NewDepartment;
             return View(model);
         }
 
+       /**
+        * Purpose: Provides Edit Form
+        * Arguments:
+        *    This method takes the department id to populate the form.
+        * Return:
+        *     Redirect to the Department form
+        **/
+        [HttpGet]
+        public async Task<IActionResult> Edit([FromRoute]int id)
+        {
+            var model = new EditDepartment();
+            model.editDepartment = await context.Department.SingleAsync(d => d.DepartmentId == id);
+
+            model.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null && e.DepartmentId != id).ToList();
+
+            foreach (Employee employee in model.Employees)
+            {
+                string fullName = employee.FirstName + " " + employee.LastName;
+                model.EmployeesFullName.Add(employee.EmployeeId, fullName);
+            }
+
+
+
+            if (model.editDepartment != null)
+            {
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+        /**
+         * Purpose: Actually updates the database to reflect changes  
+         * Arguments:
+         *    Completed editdepartment form
+         * Return:
+         *     Redirect user to detail view for the newly changed department.
+         **/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditDepartment form)
+        {
+            Department originalDepartment = context.Department.Single(p => p.DepartmentId == form.editDepartment.DepartmentId);
+            Employee[] emp = context.Employee.Where(a => a.DepartmentId == originalDepartment.DepartmentId).ToArray();
+
+            if (ModelState.IsValid)
+            {
+
+
+                if (form.selectedEmployees != null)
+                {
+                    Employee[] employees = context.Employee.Where(e => !form.selectedEmployees.Contains(e.EmployeeId)).ToArray();
+
+                    foreach (int employeeId in form.selectedEmployees)
+                    {
+                        Employee employeeSelected = context.Employee.SingleOrDefault(e => e.EmployeeId == employeeId);
+                        if (employeeSelected != null)
+                        {
+                            employeeSelected.DepartmentId = form.editDepartment.DepartmentId;
+                            context.Employee.Update(employeeSelected);
+                        }
+                    }
+                }
+
+                originalDepartment.Name = form.editDepartment.Name;
+                originalDepartment.Description = form.editDepartment.Description;
+                context.Department.Update(originalDepartment);
+
+                await context.SaveChangesAsync();
+
+                return RedirectToAction("Detail", new { id = form.editDepartment.DepartmentId });
+
+            }
+
+            form.Employees = context.Employee.OrderBy(e => e.FirstName).AsEnumerable().Where(e => e.EndDate == null && e.DepartmentId != form.editDepartment.DepartmentId).ToList();
+
+            foreach (Employee employee in form.Employees)
+            {
+                string fullName = employee.FirstName + " " + employee.LastName;
+                form.EmployeesFullName.Add(employee.EmployeeId, fullName);
+            }
+
+            return View(form);
+        } 
     }
 }

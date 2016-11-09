@@ -1,0 +1,43 @@
+﻿@model workforce_management.ViewModels.EditDepartment
+@using Bangazon.Models;
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <hr>
+        <div class="form-group">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="editDepartment.Name" class="col-md-2 control-label">Department Name</label>
+                <div class="col-md-10">
+                    <input asp-for="editDepartment.Name" class="form-control departmentName" value="@Model.editDepartment.Name" />
+                    <span asp-validation-for="editDepartment.Name" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="editDepartment.Description" class="col-md-2 control-label">Description</label>
+            <div class="col-md-10">
+                <input asp-for="editDepartment.Description" class="form-control departmentDescription" value="@Model.editDepartment.Description" />
+                <span asp-validation-for="editDepartment.Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-validation-for="Employees" class="col-md-2 control-label">Selected Employees</label>
+            <div class="col-md-10">
+                <span class="text-danger"></span>
+                @Html.ListBoxFor(m => m.selectedEmployees, new MultiSelectList(Model.EmployeesFullName, "Key", "Value", null), new { @class = "form-control" })
+            </div>
+        </div>
+
+        @Html.Hidden("editDepartment.DepartmentId", Model.editDepartment.DepartmentId)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save Changes" class="btn btn-default" id="departmentBtn" />
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
