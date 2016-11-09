@@ -115,7 +115,6 @@ namespace workforce_management.Controllers
             return View(model);
         }
 
-
         /**
          * Purpose: Retrieve an Employee record and provide a form view for the user to update
          * Arguments:

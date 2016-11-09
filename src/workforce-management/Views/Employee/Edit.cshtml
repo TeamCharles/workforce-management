@@ -65,7 +65,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label">Current Computer</label>
             <div class="col-md-10">
-                <input type="text" name="Employee.ComputerId" id="Employee_ComputerId" value="@Model.Employee.Computer.Model" disabled />
+                @Html.DisplayFor(m => m.Employee.Computer.Make) @Html.DisplayFor(m => m.Employee.Computer.Model)
             </div>
         </div>
         <div class="form-group">
