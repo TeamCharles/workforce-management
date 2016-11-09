@@ -13,13 +13,15 @@ namespace workforce_management.Controllers
     public class TrainingProgramController : Controller
     {
         /**
-         * CLASS: ProductTypes
+         * CLASS: TrainingProgram
          * PURPOSE: Creates routes for main index view (buy method) and seller view (sell method)
          * AUTHOR: Matt Kraatz/Dayne Wright
          * METHODS:
          *   TrainingProgramController(BangazonContext) - Constructor that saves the database context to a private variable.
          *   IActionResult Index() - Returns a View listing all Training Programs.
          *   IActionResult Detail() - Returns a View showing the detail of a particular Training Program.
+         *   IActionResult Edit() -  [HttpGet] Returns a View showing the edit form populated with the selected Training Program.
+         *   IActionResult Edit() -  [HttpPost] Takes the updated Training Program, updates database and returns to detail View for the Training Program.
          **/
         private BangazonContext context;
 
