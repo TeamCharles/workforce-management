@@ -42,7 +42,7 @@ namespace workforce_management.Controllers
         public IActionResult Index()
         {
             var model = new TrainingProgramIndex();
-            model.TrainingPrograms = from program in context.TrainingProgram select program;
+            model.TrainingPrograms = from program in context.TrainingProgram orderby program.Name.ToLower() select program;
             foreach (TrainingProgram program in model.TrainingPrograms)
             {
                 int count = context.Attendee.Count(a => a.ProgramId == program.TrainingProgramId);

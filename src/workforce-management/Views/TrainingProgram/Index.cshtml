@@ -13,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (TrainingProgram program in @Model.TrainingPrograms)
+        @foreach (TrainingProgram program in Model.TrainingPrograms)
         {
             <tr>
                 <td><a asp-controller="TrainingProgram" asp-action="Detail" asp-route-id="@program.TrainingProgramId">@Html.DisplayFor(model => program.Name)</a></td>
