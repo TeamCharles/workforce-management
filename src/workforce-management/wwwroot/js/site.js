@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    if (location.pathname.includes("Edit")) {
+    if (location.pathname.includes("Employee/Edit")) {
         checkEmployeeEditStatus();
         $("#employeeEdit input").on("change", checkEmployeeEditStatus);
         $("#employeeEdit select").on("change", checkEmployeeEditStatus);
@@ -10,7 +10,7 @@ $(document).ready(function () {
                 $("#employeeSubmit").attr("disabled", true);
             }
         }
-    } else {
+    } else if (location.pathname.includes("Employee/Add")) {
         checkEmployeeFormStatus();
         $("#employeeAdd input").on("change", checkEmployeeFormStatus);
         $("#employeeAdd select").on("change", checkEmployeeFormStatus);
