@@ -12,6 +12,21 @@ $(document).ready(function () {
         }
     }
 
+    // New Training Program Checks
+    if (location.pathname.includes("TrainingProgram/Add")) {
+        checkTrainingProgramFormStatus();
+        $("form input").on("change", checkTrainingProgramFormStatus);
+
+        // Checks whether all fields on the Employee Add/Edit form have been filled in
+        function checkTrainingProgramFormStatus() {
+            if ($("#NewTrainingProgram_Name").val() && $("#NewTrainingProgram_Description").val()) {
+                $("input[type='submit']").attr("disabled", false);
+            } else {
+                $("input[type='submit']").attr("disabled", true);
+            }
+        }
+    }
+
     /**
      * Purpose: Checks to see if the input fields within the department are null or !null.
      * Arguments:
