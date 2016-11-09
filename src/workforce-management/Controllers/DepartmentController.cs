@@ -102,7 +102,7 @@ namespace workforce_management.Controllers
                     .Where(e => e.EndDate == null)
                     .Select(li => new SelectListItem
                     {
-                        Text = li.LastName + " " + li.FirstName,
+                        Text = li.FirstName + " " + li.LastName,
                         Value = li.EmployeeId.ToString()
                     });
             return View(model);
