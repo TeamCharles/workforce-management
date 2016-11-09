@@ -1,9 +1,9 @@
 ﻿@model workforce_management.ViewModels.EmployeeForm
 @using Bangazon.Models;
 
-<h2>Add an Employee</h2>
+<h2>Edit an Employee</h2>
 
-<form asp-action="Add" id="employeeAdd">
+<form asp-action="Edit" id="employeeAdd">
     <div class="form-horizontal">
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -30,9 +30,22 @@
                 }
                 else
                 {
-                    <input class="form-control" type="date" name="Employee.StartDate" id="Employee_StartDate" value="@Model.Employee.StartDate" data-val="true" data-val-required="A Start Date is required." />
+                    <input class="form-control" type="date" name="Employee.StartDate" id="Employee_StartDate" value="@Model.Employee.StartDate.ToString("yyyy-MM-dd")" data-val="true" data-val-required="A Start Date is required." />
                 }
                 <span asp-validation-for="Employee.StartDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Employee.EndDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @if (Model.Employee == null || Model.Employee.EndDate == null)
+                {
+                    <input class="form-control" type="date" name="Employee.EndDate" id="Employee_EndDate" />
+                }
+                else
+                {
+                    <input class="form-control" type="date" name="Employee.EndDate" id="Employee_EndDate" value="@Model.Employee.EndDate.Value.ToString("yyyy-MM-dd")" />
+                } 
             </div>
         </div>
         <div class="form-group">
@@ -43,26 +56,34 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Employee.ComputerId" class="col-md-2 control-label">Computer</label>
+            <label asp-for="NewComputerId" class="col-md-2 control-label">New Computer</label>
             <div class="col-md-10">
-                @Html.DropDownList("Employee.ComputerId", @Model.Computers, "Select a Computer")
-                <span asp-validation-for="Employee.ComputerId" class="text-danger"></span>
+                @Html.DropDownList("NewComputerId", @Model.Computers, "Assign a Computer")
+                <span asp-validation-for="NewComputerId" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="EnrolledTraining" class="col-md-2 control-label">Training Programs</label>
+            <label class="col-md-2 control-label">Current Computer</label>
             <div class="col-md-10">
+                @Html.DisplayFor(m => m.Employee.Computer.Make) @Html.DisplayFor(m => m.Employee.Computer.Model)
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-validation-for="" class="col-md-2 control-label">Training Programs</label>
+            <div class="col-md-10">
+                <span class="text-danger"></span>
                 @Html.ListBoxFor(m => m.EnrolledTraining, new MultiSelectList(Model.TrainingPrograms, "TrainingProgramId", "Name", null), new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Add Employee" class="btn btn-default" id="employeeSubmit"/>
+                <input type="submit" value="Submit Changes" class="btn btn-default" id="employeeSubmit"/>
             </div>
         </div>
+        @Html.HiddenFor(e => e.Employee.EmployeeId)
     </div>
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Detail" asp-route-id="@Model.Employee.EmployeeId">Back to Detail</a>
 </div>
