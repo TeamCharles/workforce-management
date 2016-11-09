@@ -7,9 +7,9 @@
         <div class="form-group">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>
-                <label asp-for="editDepartment.Name" class="col-md-2 control-label">Training Program Name</label>
+                <label asp-for="editDepartment.Name" class="col-md-2 control-label">Department Name</label>
                 <div class="col-md-10">
-                    <input asp-for="editDepartment.Name" class="form-control departmentName" placeholder="@Html.DisplayFor(model => model.editDepartment.Name)" />
+                    <input asp-for="editDepartment.Name" class="form-control departmentName" value="@Model.editDepartment.Name" />
                     <span asp-validation-for="editDepartment.Name" class="text-danger"></span>
                 </div>
             </div>
@@ -18,7 +18,7 @@
         <div class="form-group">
             <label asp-for="editDepartment.Description" class="col-md-2 control-label">Description</label>
             <div class="col-md-10">
-                <input asp-for="editDepartment.Description" class="form-control departmentDescription" placeholder="@Html.DisplayFor(model => model.editDepartment.Description)" />
+                <input asp-for="editDepartment.Description" class="form-control departmentDescription" value="@Model.editDepartment.Description" />
                 <span asp-validation-for="editDepartment.Description" class="text-danger"></span>
             </div>
         </div>
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        @Html.Hidden("TrainingProgram.TrainingProgramId", Model.editDepartment.DepartmentId)
+        @Html.Hidden("editDepartment.DepartmentId", Model.editDepartment.DepartmentId)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
