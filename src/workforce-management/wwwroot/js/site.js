@@ -1,14 +1,27 @@
 $(document).ready(function () {
-    checkEmployeeFormStatus();
-    $("#employeeAdd input").on("change", checkEmployeeFormStatus);
-    $("#employeeAdd select").on("change", checkEmployeeFormStatus);
+    if (location.pathname.includes("edit")) {
+        checkEmployeeEditStatus();
+        $("#employeeEdit input").on("change", checkEmployeeEditStatus);
+        $("#employeeEdit select").on("change", checkEmployeeEditStatus);
+        function checkEmployeeEditStatus() {
+            if ($("#Employee_FirstName").val() && $("#Employee_LastName").val() && $("#Employee_StartDate").val() && $("#Employee_DepartmentId").val()) {
+                $("#employeeSubmit").attr("disabled", false);
+            } else {
+                $("#employeeSubmit").attr("disabled", true);
+            }
+        }
+    } else {
+        checkEmployeeFormStatus();
+        $("#employeeAdd input").on("change", checkEmployeeFormStatus);
+        $("#employeeAdd select").on("change", checkEmployeeFormStatus);
 
-    // Checks whether all fields on the Employee Add/Edit form have been filled in
-    function checkEmployeeFormStatus() {
-        if ($("#Employee_FirstName").val() && $("#Employee_LastName").val() && $("#Employee_StartDate").val() && $("#Employee_DepartmentId").val() && $("#Employee_ComputerId").val()) {
-            $("#employeeSubmit").attr("disabled", false);
-        } else {
-            $("#employeeSubmit").attr("disabled", true); 
+        // Checks whether all fields on the Employee Add/Edit form have been filled in
+        function checkEmployeeFormStatus() {
+            if ($("#Employee_FirstName").val() && $("#Employee_LastName").val() && $("#Employee_StartDate").val() && $("#Employee_DepartmentId").val() && $("#Employee_ComputerId").val()) {
+                $("#employeeSubmit").attr("disabled", false);
+            } else {
+                $("#employeeSubmit").attr("disabled", true);
+            }
         }
     }
 
@@ -44,6 +57,16 @@ $(document).ready(function () {
             $("#computerAddBtn").attr("disabled", true)
         }
     }
+    /**
+     * Purpose: Checks to see if the input fields within the training program form are null or !null.
+     **/
+    function validateTrainingProgram() {
+        if ($("#TrainingProgram_Description").val() && $("#TrainingProgram_Name").val()) {
+            $('input[type="submit"]').removeAttr("disabled");
+        } else {
+            $('input[type="submit"]').attr("disabled", true);
+        }
+    }
 
     /**
      * Purpose: Checks to see if the input fields within the add computer view are null or !null.
@@ -57,14 +80,23 @@ $(document).ready(function () {
     }
 
     /**
-     * Purpose: Adds event listeners to the computer add form fields to validate the form
+     * Purpose: Adds event listeners to the computer add form fields to validate the form & training form fields
      **/
-    (function addListenersToAddComputerFields() {
+    (function() {
         var computerFieldItems = [
             $(".computerAddSerialNumber"),
             $(".computerAddMake"),
             $(".computerAddModel")
         ];
+
+        var trainingProgramEditFields = [
+            $("#TrainingProgram_Description"),
+            $("#TrainingProgram_Name")
+        ];
+ 
+        trainingProgramEditFields.forEach(field => {
+            field.on("change", validateTrainingProgram);
+        });
 
         computerFieldItems.forEach(field => {
             field.on("change", validateAddComputerForm);

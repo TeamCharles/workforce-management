@@ -1,0 +1,49 @@
+﻿@model workforce_management.ViewModels.ComputerEdit
+
+@{
+    ViewData["Title"] = "Edit a Computer";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="ComputerToEdit.SerialNumber" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ComputerToEdit.SerialNumber" class="form-control computerAddSerialNumber" />
+                <span asp-validation-for="ComputerToEdit.SerialNumber" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ComputerToEdit.Make" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ComputerToEdit.Make" class="form-control computerAddMake" />
+                <span asp-validation-for="ComputerToEdit.Make" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ComputerToEdit.Model" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ComputerToEdit.Model" class="form-control computerAddModel" />
+                <span asp-validation-for="ComputerToEdit.Model" class="text-danger"></span>
+            </div>
+        </div>
+
+        @Html.Hidden("ComputerToEdit.ComputerId", Model.ComputerToEdit.ComputerId);
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save Changes" class="btn btn-default" id="computerAddBtn" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-controller="Computer" asp-action="Index">Back to Computer List</a>
+</div>
