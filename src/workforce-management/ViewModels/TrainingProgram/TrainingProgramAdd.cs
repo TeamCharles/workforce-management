@@ -7,6 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
  
 namespace workforce_management.ViewModels
 {
+
+    /**
+     * Class: TrainingProgramAdd
+     * Purpose: ViewModel for the TrainingProgram/Add view. Employees get the employees for the dropdownlist. EmployeeIds retrieve an array of integers.
+     * Author: Anulfo Ordaz
+     * 
+     */
     public class TrainingProgramAdd
     {
         public IEnumerable<Employee> Employees { get; set; }

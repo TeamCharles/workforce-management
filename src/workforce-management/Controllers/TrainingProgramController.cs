@@ -72,16 +72,16 @@ namespace workforce_management.Controllers
                 context.Add(trainingProgramAdd.NewTrainingProgram);
                 await context.SaveChangesAsync();
 
-                if (trainingProgramAdd.EmployeeIds.Count() >= 0)
+                if(trainingProgramAdd.EmployeeIds != null && trainingProgramAdd.EmployeeIds.Count() >= 0)
                 {
                     foreach (int employee in trainingProgramAdd.EmployeeIds)
                     {
-                        context.Attendee.Add(new Bangazon.Models.Attendee { EmployeeId = employee,  ProgramId = newTrainingProgram.TrainingProgramId });
+                        context.Attendee.Add(new Bangazon.Models.Attendee { EmployeeId = employee,  ProgramId = trainingProgramAdd.NewTrainingProgram.TrainingProgramId });
                     }
                 }
 
                 await context.SaveChangesAsync();
-                return RedirectToAction("Detail", new RouteValueDictionary(new { controller = "TrainingProgram", action = "Detail", Id = newTrainingProgram.TrainingProgramId}) );
+                return RedirectToAction("Detail", new RouteValueDictionary(new { controller = "TrainingProgram", action = "Detail", Id = trainingProgramAdd.NewTrainingProgram.TrainingProgramId}) );
             }
             return RedirectToAction("Index", "TrainingProgram");
         }
