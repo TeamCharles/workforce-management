@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    if (location.pathname.includes("edit")) {
+    if (location.pathname.includes("Edit")) {
         checkEmployeeEditStatus();
         $("#employeeEdit input").on("change", checkEmployeeEditStatus);
         $("#employeeEdit select").on("change", checkEmployeeEditStatus);
