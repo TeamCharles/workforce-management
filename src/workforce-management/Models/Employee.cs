@@ -45,6 +45,9 @@ namespace Bangazon.Models
         [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
 
+        [Required]
+        public bool Administrator { get; set; } = false;
+
         // Foreign Key Dependencies
         public ICollection<Attendee> Attendees;
     }
