@@ -36,7 +36,7 @@ namespace BangazonWeb
             // Add framework services.
             services.AddMvc();
 
-            string path = System.Environment.GetEnvironmentVariable("Bangazon_Workforce_Db");
+            string path = System.Environment.GetEnvironmentVariable("Bangazon_Workforce_DB");
             var connection = $"Filename={path}";
             Console.WriteLine($"connection = {connection}");
             services.AddDbContext<BangazonContext>(options => options.UseSqlite(connection));
