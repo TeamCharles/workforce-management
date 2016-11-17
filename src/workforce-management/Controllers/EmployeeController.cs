@@ -142,7 +142,7 @@ namespace workforce_management.Controllers
             var model = new EmployeeForm(context);
 
             model.Employee = await context.Employee.SingleAsync(e => e.EmployeeId == id);
-            model.Employee.Computer = await context.Computer.SingleAsync(c => c.ComputerId == model.Employee.ComputerId);
+            model.Employee.Computer = await context.Computer.SingleOrDefaultAsync(c => c.ComputerId == model.Employee.ComputerId);
             model.EnrolledTraining = await context.Attendee.Where(a => a.EmployeeId == model.Employee.EmployeeId).Select(a => a.ProgramId).ToArrayAsync();
             return View(model);
         }

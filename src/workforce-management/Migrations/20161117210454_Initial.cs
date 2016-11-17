@@ -63,7 +63,7 @@ namespace workforcemanagement.Migrations
                     EmployeeId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
                     Administrator = table.Column<bool>(nullable: false),
-                    ComputerId = table.Column<int>(nullable: false),
+                    ComputerId = table.Column<int>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "strftime('%Y-%m-%d %H:%M:%S')"),
                     DepartmentId = table.Column<int>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: true),
@@ -79,7 +79,7 @@ namespace workforcemanagement.Migrations
                         column: x => x.ComputerId,
                         principalTable: "Computer",
                         principalColumn: "ComputerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Employee_Department_DepartmentId",
                         column: x => x.DepartmentId,

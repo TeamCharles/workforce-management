@@ -8,7 +8,7 @@ using BangazonWeb.Data;
 namespace workforcemanagement.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    [Migration("20161117202507_Initial")]
+    [Migration("20161117210454_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,7 +92,7 @@ namespace workforcemanagement.Migrations
 
                     b.Property<bool>("Administrator");
 
-                    b.Property<int>("ComputerId");
+                    b.Property<int?>("ComputerId");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAddOrUpdate()
@@ -161,8 +161,7 @@ namespace workforcemanagement.Migrations
                 {
                     b.HasOne("Bangazon.Models.Computer", "Computer")
                         .WithMany()
-                        .HasForeignKey("ComputerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ComputerId");
 
                     b.HasOne("Bangazon.Models.Department", "Department")
                         .WithMany()

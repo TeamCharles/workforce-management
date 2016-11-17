@@ -91,7 +91,7 @@ namespace workforcemanagement.Migrations
 
                     b.Property<bool>("Administrator");
 
-                    b.Property<int>("ComputerId");
+                    b.Property<int?>("ComputerId");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAddOrUpdate()
@@ -160,8 +160,7 @@ namespace workforcemanagement.Migrations
                 {
                     b.HasOne("Bangazon.Models.Computer", "Computer")
                         .WithMany()
-                        .HasForeignKey("ComputerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ComputerId");
 
                     b.HasOne("Bangazon.Models.Department", "Department")
                         .WithMany()

@@ -24,8 +24,7 @@ namespace Bangazon.Models
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
 
-        [Required]
-        public int ComputerId { get; set; }
+        public int? ComputerId { get; set; }
         public Computer Computer { get; set; }
 
         [Required]
