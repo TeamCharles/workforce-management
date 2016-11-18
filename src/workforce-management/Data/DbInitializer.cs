@@ -123,49 +123,56 @@ namespace BangazonWeb.Data
                       LastName = "Daily",
                       DepartmentId = 1,
                       ComputerId = 1,
-                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
+                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                      Administrator = false
                   },
                   new Employee {
                       FirstName = "Steve",
                       LastName = "Brownlee",
                       DepartmentId = 1,
                       ComputerId = 2,
-                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
+                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                      Administrator = true
                   },
                   new Employee {
                       FirstName = "Grace",
                       LastName = "Nichols",
                       DepartmentId = 1,
                       ComputerId = 3,
-                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
+                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                      Administrator = true
                   },
                   new Employee {
                       FirstName = "Tony",
                       LastName = "Nichols",
                       DepartmentId = 1,
                       ComputerId = 4,
-                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
+                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                      Administrator = false
                   },
                   new Employee {
                       FirstName = "Steve",
                       LastName = "Erwin",
                       DepartmentId = 2,
                       ComputerId = 5,
-                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
+                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                      Administrator = false
                   },
                   new Employee {
                       FirstName = "Dejan",
                       LastName = "Stjephanovic",
                       DepartmentId = 2,
                       ComputerId = 6,
-                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
+                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                      Administrator = false
                   },
                   new Employee {
                       FirstName = "Cody",
                       LastName = "Szkalarski",
                       DepartmentId = 2,
                       ComputerId = 7,
-                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
+                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                      Administrator = false
                   },
                   new Employee {
                       FirstName = "Brandon",
@@ -173,20 +180,23 @@ namespace BangazonWeb.Data
                       DepartmentId = 3,
                       ComputerId = 8,
                       StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                      Administrator = false
                   },
                   new Employee {
                       FirstName = "Mike",
                       LastName = "Morris",
                       DepartmentId = 3,
                       ComputerId = 9,
-                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
+                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                      Administrator = false
                   },
                   new Employee {
                       FirstName = "Stephanie",
                       LastName = "Best",
                       DepartmentId = 3,
                       ComputerId = 10,
-                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0)
+                      StartDate = new DateTime(2008, 3, 1, 7, 0, 0),
+                      Administrator = false
                   }
                 };
 

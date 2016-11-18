@@ -89,7 +89,9 @@ namespace workforcemanagement.Migrations
                     b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ComputerId");
+                    b.Property<bool>("Administrator");
+
+                    b.Property<int?>("ComputerId");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAddOrUpdate()
@@ -129,9 +131,13 @@ namespace workforcemanagement.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 255);
 
+                    b.Property<DateTime>("EndDate");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 50);
+
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("TrainingProgramId");
 
@@ -154,8 +160,7 @@ namespace workforcemanagement.Migrations
                 {
                     b.HasOne("Bangazon.Models.Computer", "Computer")
                         .WithMany()
-                        .HasForeignKey("ComputerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ComputerId");
 
                     b.HasOne("Bangazon.Models.Department", "Department")
                         .WithMany()

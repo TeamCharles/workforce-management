@@ -24,7 +24,7 @@ export ASPNETCORE_ENVIRONMENT="Development"
 
 On initial installation of the Banagazon web application you must set an environment variable to your local database. (This database with the file name bangazon.db will be created when you run dotnet ef database update later in the installation process.)
 ```Bash
-export BangazonWeb_Db_Path="/path/to/bangazon.db"
+export BangazonWeb_Db_Path="/path/to/Bangazon_Workforce_DB.db"
 ```
 
 Navigate into the `src/workforce-management` folder.
@@ -53,7 +53,7 @@ $env:ASPNETCORE_ENVIRONMENT="Development"
 
 On initial installation of the Banagazon web application you must set an environment variable to your local database. Even though you have not yet created a database, this variable will set the location of your database for later after creation.
 ```Bash
-$env:BangazonWeb_Db_Path="/path/to/bangazon.db"
+$env:BangazonWeb_Db_Path="/path/to/Bangazon_Workforce_DB.db"
 ```
 
 Navigate into the `src/workforce-management` folder.

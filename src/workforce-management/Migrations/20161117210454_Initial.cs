@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace workforcemanagement.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,7 +47,9 @@ namespace workforcemanagement.Migrations
                         .Annotation("Autoincrement", true),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "strftime('%Y-%m-%d %H:%M:%S')"),
                     Description = table.Column<string>(maxLength: 255, nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,7 +62,8 @@ namespace workforcemanagement.Migrations
                 {
                     EmployeeId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
-                    ComputerId = table.Column<int>(nullable: false),
+                    Administrator = table.Column<bool>(nullable: false),
+                    ComputerId = table.Column<int>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "strftime('%Y-%m-%d %H:%M:%S')"),
                     DepartmentId = table.Column<int>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: true),
@@ -76,7 +79,7 @@ namespace workforcemanagement.Migrations
                         column: x => x.ComputerId,
                         principalTable: "Computer",
                         principalColumn: "ComputerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Employee_Department_DepartmentId",
                         column: x => x.DepartmentId,
